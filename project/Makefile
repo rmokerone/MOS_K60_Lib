@@ -34,7 +34,7 @@ LIBS := ../lib
 
 # directories
 INC_DIRS = . $(LIBS)/common $(LIBS)/cpu $(LIBS)/cpu/headers $(LIBS)/. $(LIBS)/hw
-SRC_DIRS := . $(LIBS)/cpu $(LIBS)/. $(LIBS)/hw
+SRC_DIRS := . $(LIBS)/cpu $(LIBS)/. $(LIBS)/hw $(LIBS)/common
 OUT_DIR := out
 INC_DIRS_F = -I. $(patsubst %, -I%, $(INC_DIRS))
 

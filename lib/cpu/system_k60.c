@@ -10,13 +10,26 @@
  * http://www.wtfpl.net/ for more details.
  *
  */
-#include "common.h"
+ #include <stdint.h>
+ #include "common.h"
 
-int core_clk_mhz = 50;
-int periph_clk_khz;
+/*-------------------------------------------------------------
+ * 定义时钟相关值
+ * -----------------------------------------------------------*/
+#define CPU_XTAL_CLK_HZ                 50000000u       //外部有源晶振频率，单位Hz
+#define CPU_XTAL32k_CLK_HZ              32768u          //外部32k时钟晶振频率，单位Hz    
+#define CPU_INT_SLOW_CLK_HZ             32768u          //慢速内部振荡器的值，单位Hz
+#define CPU_INT_FAST_CLK_HZ             4000000u        //快速内部振荡器的值，单位Hz
+#define DEFAULT_SYSTEM_CLOCK            100000000u      //默认系统主频，单位Hz
+ 
 
 /**
- * \brief  Clock initialization (96 MHz)
+ * @brief 系统主频（单位Hz）
+ */
+uint32_t SystemCoreClock = DEFAULT_SYSTEM_CLOCK;
+
+/**
+ * \brief  Clock initialization ( MHz)
  *
  * \param  void
  *
@@ -24,51 +37,38 @@ int periph_clk_khz;
  */
 void SystemInit(void)
 {
-  uint32_t temp_pfapr, i;
   //使能所有IO口时钟
   SIM_SCGC5 |= (SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK
               | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK
               | SIM_SCGC5_PORTE_MASK);
-  //首先移动到FBE模式
-  MCG_C2 = 0;
-  //振荡器初始化完成后，释放锁存状态下的oscillator和GPIO
-  SIM_SCGC4 |= SIM_SCGC4_LLWU_MASK;
-  //LLWU_CS |= LLWU_CS_ACKISO_MASK;
-  //选择外部晶振和参考分频器和清零IREFS并启动外部osc
-  MCG_C1 = MCG_C1_CLKS(2) | MCG_C1_FRDIV(3);
-  while (MCG_S & MCG_S_IREFST_MASK);//等待参考时钟清零
-  while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x2);
-
-  MCG_C5 = MCG_C5_PRDIV(7);
-  MCG_C6 = 0x0;
-
-  temp_pfapr = FMC_PFAPR;
-
-  FMC_PFAPR |= FMC_PFAPR_M7PFD_MASK | FMC_PFAPR_M6PFD_MASK | FMC_PFAPR_M5PFD_MASK
-             | FMC_PFAPR_M4PFD_MASK | FMC_PFAPR_M3PFD_MASK | FMC_PFAPR_M2PFD_MASK
-             | FMC_PFAPR_M1PFD_MASK | FMC_PFAPR_M0PFD_MASK;
-
-  SIM_CLKDIV1 = SIM_CLKDIV1_OUTDIV1(0) | SIM_CLKDIV1_OUTDIV2(1)
-              | SIM_CLKDIV1_OUTDIV3(1) | SIM_CLKDIV1_OUTDIV4(3);
-
-  for (i = 0 ; i < 4 ; i++);
-
-  FMC_PFAPR = temp_pfapr;
-
-  MCG_C6 = MCG_C6_PLLS_MASK | MCG_C6_VDIV(16);
-  while (!(MCG_S & MCG_S_PLLST_MASK));
-
-  while (!(MCG_S & MCG_S_LOCK_MASK));
-  MCG_C1 &= ~MCG_C1_CLKS_MASK;
-  while (((MCG_S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT) != 0x3);
-
-  periph_clk_khz = 96000 / (((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> 24) + 1);
+  //初始化各部分时钟：系统内核主频、总线时钟、FlexBus时钟、Flash时钟
+  LPLD_PLL_Setup(CORE_CLK_MHZ);
+  
+  //更新内核主频
+  SystemCoreClockUpdate();
+  
+  //获取各部分时钟
+  g_core_clock = SystemCoreClock;
+  g_bus_clock = g_core_clock / ((uint32_t)((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT)+ 1u);
+  g_flexbus_clock =  g_core_clock / ((uint32_t)((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV3_MASK) >> SIM_CLKDIV1_OUTDIV3_SHIFT)+ 1u);
+  g_flash_clock =  g_core_clock / ((uint32_t)((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT)+ 1u);
+ 
 }
 
-/*
-void set_sys_dividers(uint32 outdiv1, uint32 outdiv2, uint32 outdiv3, uint32 outdiv4
-                     )
+/**
+ * 更新SystemCoreClock
+ *
+ * @param  none
+ * @return none
+ *
+ * @brief  更新全局变量SystemCoreClock的值，以便获取最新的系统内核频率。
+ *         
+ */
+void SystemCoreClockUpdate (void) 
 {
-
+    uint32_t temp;
+    temp =  CPU_XTAL_CLK_HZ *((uint32_t)(MCG_C6 & MCG_C6_VDIV_MASK) + 24u );
+    temp = (uint32_t)(temp/((uint32_t)(MCG_C5 & MCG_C5_PRDIV_MASK) +1u ));
+    SystemCoreClock = temp;
 }
-*/
+

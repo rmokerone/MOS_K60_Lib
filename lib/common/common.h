@@ -13,9 +13,32 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "k60_configure.h"
 #include "system_k60.h"
 #include "derivative.h"
-#include "main.h"
 #include <stdint.h>
 
+//定义常用的数据类型
+typedef unsigned char	uint8;  /*  8 bits */
+typedef unsigned short int	uint16; /* 16 bits */
+typedef unsigned long int	uint32; /* 32 bits */
+
+typedef signed char		int8;   /*  8 bits */
+typedef short int	        int16;  /* 16 bits */
+typedef int		        int32;  /* 32 bits */
+
+typedef volatile int8		vint8;  /*  8 bits */
+typedef volatile int16	vint16; /* 16 bits */
+typedef volatile int32	vint32; /* 32 bits */
+
+typedef volatile uint8	vuint8;  /*  8 bits */
+typedef volatile uint16	vuint16; /* 16 bits */
+typedef volatile uint32	vuint32; /* 32 bits */
+
+typedef float   		float32; /*  32 bits */
+typedef double   		float64; /*  64 bits */
+
+typedef unsigned char   boolean;      /* 8-bit*/
+
+#include "MOS_Drivers.h"
 #endif

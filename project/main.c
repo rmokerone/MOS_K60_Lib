@@ -13,8 +13,10 @@
 #include "common.h"
 #include "main.h"
 
-static void gpio_init(void);
-static void delay(void);
+void init_gpio(void);
+void delay (void);
+
+GPIO_InitTypeDef gpio_init_struct;
 
 /**
  * \brief  LED1 Toggle with a delay, button SW1 toggles LED2 (ISR)
@@ -25,50 +27,13 @@ static void delay(void);
  */
 int main(void)
 {
-  //SystemInit();
-
-  NVICICPR2 |= 1 << (87 & 0x1F);
-  NVICISER2 |= 1 << (87 & 0x1F);
-
-  gpio_init();
-
-  LED1_OFF;
-  LED2_OFF;
-
-  while(1)
-  {
-//    LED1_TOGGLE;
-    LED2_TOGGLE;
-    delay();
-  }
-}
-
-/**
- * \brief  Button and LED initialization
- *
- * \param  void
- *
- * \return void
- */
-void gpio_init(void)
-{
-  PORTB_PCR19 = PORT_PCR_MUX(1) | PORT_PCR_IRQC(0xA) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;
-  PORTB_PCR21 = (PORT_PCR_MUX(1));
-  PORTB_PCR22 = (PORT_PCR_MUX(1));
-  GPIOB_PDDR = (LED1 | LED2);
-}
-
-/**
- * \brief  Port A ISR Handler
- *
- * \param  void
- *
- * \return void
- */
-void PORTB_IRQHandler(void)
-{
-  PORTB_ISFR = 0xFFFFFFFF;
-  LED2_TOGGLE;
+    init_gpio();
+    while (1)
+    {
+        MOS_GPIO_Toggle(PTB,LED2);
+        delay();
+    }
+    
 }
 
 /**
@@ -89,3 +54,11 @@ void delay(void)
   }
 }
 
+void init_gpio(void)
+{
+    gpio_init_struct.GPIO_PTx = PTB;
+    gpio_init_struct.GPIO_Pins = LED2;
+    gpio_init_struct.GPIO_Dir = DIR_OUTPUT;
+    gpio_init_struct.GPIO_Output = OUTPUT_H;
+    MOS_GPIO_Init (gpio_init_struct);
+}
