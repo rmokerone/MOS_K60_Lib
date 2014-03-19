@@ -40,5 +40,22 @@ typedef double   		float64; /*  64 bits */
 
 typedef unsigned char   boolean;      /* 8-bit*/
 
+/*
+ * 其他定义
+ */
+#ifdef	FALSE
+#undef	FALSE
+#endif
+#define FALSE	0
+
+#ifdef	TRUE
+#undef	TRUE
+#endif
+#define	TRUE	1
+
+#ifndef NULL
+#define NULL    0
+#endif
+
 #include "MOS_Drivers.h"
 #endif

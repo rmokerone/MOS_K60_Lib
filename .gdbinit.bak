@@ -1,0 +1,26 @@
+#*************************************************
+#
+#  Connect to J-Link and debug application in sdram on 2440
+#
+# Connect to the J-Link gdb server
+            # Enable flash download and flash breakpoints.
+            # Flash download and flash breakpoints are features of
+            # the J-Link software which require separate licenses 
+            # from SEGGER.
+            # Select flash device
+                monitor flash device = mk60fx512xxx15
+                # Enable FlashDL and FlashBPs
+                    #monitor flash download = 1
+                        monitor flash breakpoints = 1
+                        # Clear all pendig breakpoints
+                            monitor clrbp
+                            # Set gdb server to little endian
+                                #monitor endian little
+                                # Set speed to 5 kHz
+                                    monitor speed 4800
+                                    # Reset the target
+                                        monitor reset 1
+                                            break main
+                                            #break dfs_uffs_mount
+                                                #b rt_init_thread_entry
+                                                    #c

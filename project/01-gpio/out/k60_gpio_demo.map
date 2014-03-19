@@ -1,0 +1,333 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+GPIO_ISR            0x14              out/hw_gpio.o
+gpio_init_struct    0x14              out/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+VECTORS          0x00000000         0x00000410         xr
+FLASH            0x00000800         0x0007f800         xr
+SRAM_U           0x1fff0000         0x00010000         xrw
+SRAM_L           0x20000000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD out/main.o
+LOAD out/startup_k60.o
+LOAD out/system_k60.o
+LOAD out/hw_gpio.o
+LOAD out/hw_mcg.o
+START GROUP
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libc.a
+END GROUP
+
+.vectortable    0x00000000      0x410
+                0x00000000                __vector_table = .
+                0x00000000                . = ALIGN (0x4)
+ *(.vectors)
+ .vectors       0x00000000      0x410 out/startup_k60.o
+                0x00000000                g_pfnVectors
+                0x00000410                . = ALIGN (0x4)
+
+.text           0x00000800      0xc34
+                0x00000800                . = ALIGN (0x4)
+ *(.text)
+ .text          0x00000800      0x140 out/main.o
+                0x00000800                main
+                0x00000810                delay
+                0x00000858                init_gpio
+                0x00000928                toggle
+ .text          0x00000940       0xac out/startup_k60.o
+                0x00000940                CAN0_Rx_Warning_IRQHandler
+                0x00000940                I2C0_IRQHandler
+                0x00000940                CAN1_ORed_Message_buffer_IRQHandler
+                0x00000940                UART3_RX_TX_IRQHandler
+                0x00000940                UART0_RX_TX_IRQHandler
+                0x00000940                I2C1_IRQHandler
+                0x00000940                DMA2_IRQHandler
+                0x00000940                ENET_Error_IRQHandler
+                0x00000940                CAN0_Tx_Warning_IRQHandler
+                0x00000940                PIT0_IRQHandler
+                0x00000940                CAN0_ORed_Message_buffer_IRQHandler
+                0x00000940                Watchdog_IRQHandler
+                0x00000940                CMP2_IRQHandler
+                0x00000940                I2S0_IRQHandler
+                0x00000940                TSI0_IRQHandler
+                0x00000940                ENET_Receive_IRQHandler
+                0x00000940                ENET_1588_Timer_IRQHandler
+                0x00000940                CAN1_Error_IRQHandler
+                0x00000940                UART2_RX_TX_IRQHandler
+                0x00000940                ADC0_IRQHandler
+                0x00000940                CMT_IRQHandler
+                0x00000940                UART4_RX_TX_IRQHandler
+                0x00000940                SPI1_IRQHandler
+                0x00000940                DMA9_IRQHandler
+                0x00000940                DMA14_IRQHandler
+                0x00000940                CMP1_IRQHandler
+                0x00000940                UART4_ERR_IRQHandler
+                0x00000940                ADC1_IRQHandler
+                0x00000940                PIT2_IRQHandler
+                0x00000940                LPTimer_IRQHandler
+                0x00000940                DMA5_IRQHandler
+                0x00000940                RTC_IRQHandler
+                0x00000940                PDB0_IRQHandler
+                0x00000940                CAN1_Bus_Off_IRQHandler
+                0x00000940                FTM1_IRQHandler
+                0x00000940                UART5_RX_TX_IRQHandler
+                0x00000940                UART3_ERR_IRQHandler
+                0x00000940                PIT3_IRQHandler
+                0x00000940                SDHC_IRQHandler
+                0x00000940                MCG_IRQHandler
+                0x00000940                UART2_ERR_IRQHandler
+                0x00000940                DMA11_IRQHandler
+                0x00000940                UART5_ERR_IRQHandler
+                0x00000940                Read_Collision_IRQHandler
+                0x00000940                Default_Handler
+                0x00000940                DMA7_IRQHandler
+                0x00000940                ENET_Transmit_IRQHandler
+                0x00000940                USB_IRQHandler
+                0x00000940                CAN1_Tx_Warning_IRQHandler
+                0x00000940                USB0_IRQHandler
+                0x00000940                LLW_IRQHandler
+                0x00000940                SPI2_IRQHandler
+                0x00000940                CAN1_Rx_Warning_IRQHandler
+                0x00000940                CAN1_Wake_Up_IRQHandler
+                0x00000940                DMA13_IRQHandler
+                0x00000940                DMA3_IRQHandler
+                0x00000940                RNG_IRQHandler
+                0x00000940                DMA0_IRQHandler
+                0x00000940                DMA15_IRQHandler
+                0x00000940                DAC0_IRQHandler
+                0x00000940                Software_IRQHandler
+                0x00000940                CAN0_Error_IRQHandler
+                0x00000940                DMA4_IRQHandler
+                0x00000940                PIT1_IRQHandler
+                0x00000940                UART0_ERR_IRQHandler
+                0x00000940                DMA_Error_IRQHandler
+                0x00000940                LVD_LVW_IRQHandler
+                0x00000940                SPI0_IRQHandler
+                0x00000940                FTM0_IRQHandler
+                0x00000940                DAC1_IRQHandler
+                0x00000940                MCM_IRQHandler
+                0x00000940                DMA12_IRQHandler
+                0x00000940                FTFL_IRQHandler
+                0x00000940                CAN0_Bus_Off_IRQHandler
+                0x00000940                FTM2_IRQHandler
+                0x00000940                DMA8_IRQHandler
+                0x00000940                DMA10_IRQHandler
+                0x00000940                CAN0_Wake_Up_IRQHandler
+                0x00000940                UART1_ERR_IRQHandler
+                0x00000940                UART1_RX_TX_IRQHandler
+                0x00000940                CMP0_IRQHandler
+                0x00000940                DMA6_IRQHandler
+                0x00000940                DMA1_IRQHandler
+                0x00000948                Reset_Handler
+ .text          0x000009ec      0x2d8 out/system_k60.o
+                0x000009ec                SystemInit
+                0x00000adc                SystemCoreClockUpdate
+                0x00000b3c                enable_irq
+ .text          0x00000cc4      0x448 out/hw_gpio.o
+                0x00000cc4                MOS_GPIO_Init
+                0x00000e08                MOS_GPIO_EnableIrq
+                0x00000efc                MOS_GPIO_DisableIrq
+                0x00001004                MOS_GPIO_Output
+                0x00001020                MOS_GPIO_Toggle
+                0x0000103c                MOS_GPIO_Input
+                0x00001058                PORTA_IRQHandler
+                0x0000107c                PORTB_IRQHandler
+                0x000010a0                PORTC_IRQHandler
+                0x000010c4                PORTD_IRQHandler
+                0x000010e8                PORTE_IRQHandler
+ .text          0x0000110c      0x328 out/hw_mcg.o
+                0x0000110c                LPLD_PLL_Setup
+                0x00001394                LPLD_Set_SYS_DIV
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x00001434                . = ALIGN (0x4)
+                0x00001434                _etext = .
+
+.vfp11_veneer   0x00001434        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00001434        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x00001434        0x0
+ .iplt          0x00000000        0x0 out/main.o
+
+.rel.dyn        0x00001434        0x0
+ .rel.iplt      0x00000000        0x0 out/main.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00001434                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00001434                __exidx_end = .
+
+.preinit_array  0x00001434        0x0
+                0x00001434                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array*)
+                0x00001434                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x00001434        0x0
+                0x00001434                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*))
+ *(.init_array*)
+                0x00001434                PROVIDE (__init_array_end, .)
+
+.fini_array     0x00001434        0x0
+                0x00001434                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*))
+ *(.fini_array*)
+                0x00001434                PROVIDE (__fini_array_end, .)
+                0x00001434                __etext = .
+
+.data           0x1fff0000       0x14 load address 0x00001434
+                0x1fff0000                . = ALIGN (0x4)
+                0x1fff0000                _sdata = .
+ *(.data)
+ .data          0x1fff0000        0x0 out/main.o
+ .data          0x1fff0000        0x0 out/startup_k60.o
+ .data          0x1fff0000        0x4 out/system_k60.o
+                0x1fff0000                SystemCoreClock
+ .data          0x1fff0004        0x0 out/hw_gpio.o
+ .data          0x1fff0004       0x10 out/hw_mcg.o
+                0x1fff0004                g_core_clock
+                0x1fff0008                g_bus_clock
+                0x1fff000c                g_flash_clock
+                0x1fff0010                g_flexbus_clock
+ *(.data*)
+                0x1fff0014                . = ALIGN (0x4)
+                0x1fff0014                _edata = .
+
+.igot.plt       0x1fff0014        0x0 load address 0x00001448
+ .igot.plt      0x00000000        0x0 out/main.o
+                0x1fff0014                . = ALIGN (0x4)
+
+.bss            0x1fff0014       0x28 load address 0x00001448
+                0x1fff0014                _sbss = .
+ *(.bss)
+ .bss           0x1fff0014        0x0 out/main.o
+ .bss           0x1fff0014        0x0 out/startup_k60.o
+ .bss           0x1fff0014        0x0 out/system_k60.o
+ .bss           0x1fff0014        0x0 out/hw_gpio.o
+ .bss           0x1fff0014        0x0 out/hw_mcg.o
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x1fff0014       0x14 out/main.o
+                0x1fff0014                gpio_init_struct
+ COMMON         0x1fff0028       0x14 out/hw_gpio.o
+                0x1fff0028                GPIO_ISR
+                0x1fff003c                . = ALIGN (0x4)
+                0x1fff003c                _ebss = .
+
+.heap           0x1fff003c        0x0
+                0x1fff003c                __end__ = .
+                0x1fff003c                end = __end__
+ *(.heap*)
+                0x1fff003c                __HeapLimit = .
+
+.stack_dummy    0x1fff003c        0x0
+ *(.stack*)
+                0x20000000                __StackTop = (ORIGIN (SRAM_U) + 0x10000)
+                0x20000000                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x20000000                PROVIDE (__stack, __StackTop)
+                0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
+
+.ARM.attributes
+                0x00000000       0x33
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x33 out/main.o
+ .ARM.attributes
+                0x00000033       0x33 out/startup_k60.o
+ .ARM.attributes
+                0x00000066       0x33 out/system_k60.o
+ .ARM.attributes
+                0x00000099       0x33 out/hw_gpio.o
+ .ARM.attributes
+                0x000000cc       0x33 out/hw_mcg.o
+OUTPUT(out/k60_gpio_demo.elf elf32-littlearm)
+
+.debug_info     0x00000000     0x1561
+ .debug_info    0x00000000      0x22c out/main.o
+ .debug_info    0x0000022c      0x103 out/startup_k60.o
+ .debug_info    0x0000032f      0x65e out/system_k60.o
+ .debug_info    0x0000098d      0x508 out/hw_gpio.o
+ .debug_info    0x00000e95      0x6cc out/hw_mcg.o
+
+.debug_abbrev   0x00000000      0x5a1
+ .debug_abbrev  0x00000000      0x101 out/main.o
+ .debug_abbrev  0x00000101       0xab out/startup_k60.o
+ .debug_abbrev  0x000001ac      0x144 out/system_k60.o
+ .debug_abbrev  0x000002f0      0x16d out/hw_gpio.o
+ .debug_abbrev  0x0000045d      0x144 out/hw_mcg.o
+
+.debug_loc      0x00000000      0x488
+ .debug_loc     0x00000000       0xc8 out/main.o
+ .debug_loc     0x000000c8       0x64 out/startup_k60.o
+ .debug_loc     0x0000012c       0x9c out/system_k60.o
+ .debug_loc     0x000001c8      0x250 out/hw_gpio.o
+ .debug_loc     0x00000418       0x70 out/hw_mcg.o
+
+.debug_aranges  0x00000000       0xa0
+ .debug_aranges
+                0x00000000       0x20 out/main.o
+ .debug_aranges
+                0x00000020       0x20 out/startup_k60.o
+ .debug_aranges
+                0x00000040       0x20 out/system_k60.o
+ .debug_aranges
+                0x00000060       0x20 out/hw_gpio.o
+ .debug_aranges
+                0x00000080       0x20 out/hw_mcg.o
+
+.debug_line     0x00000000      0x641
+ .debug_line    0x00000000      0x153 out/main.o
+ .debug_line    0x00000153       0x70 out/startup_k60.o
+ .debug_line    0x000001c3      0x159 out/system_k60.o
+ .debug_line    0x0000031c      0x19b out/hw_gpio.o
+ .debug_line    0x000004b7      0x18a out/hw_mcg.o
+
+.debug_str      0x00000000      0x6c5
+ .debug_str     0x00000000      0x1c4 out/main.o
+                                0x204 (size before relaxing)
+ .debug_str     0x000001c4       0x7b out/startup_k60.o
+                                0x127 (size before relaxing)
+ .debug_str     0x0000023f      0x235 out/system_k60.o
+                                0x362 (size before relaxing)
+ .debug_str     0x00000474      0x14a out/hw_gpio.o
+                                0x33d (size before relaxing)
+ .debug_str     0x000005be      0x107 out/hw_mcg.o
+                                0x3cc (size before relaxing)
+
+.comment        0x00000000       0x70
+ .comment       0x00000000       0x70 out/main.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 out/startup_k60.o
+ .comment       0x00000000       0x71 out/system_k60.o
+ .comment       0x00000000       0x71 out/hw_gpio.o
+ .comment       0x00000000       0x71 out/hw_mcg.o
+
+.debug_frame    0x00000000      0x2cc
+ .debug_frame   0x00000000       0x84 out/main.o
+ .debug_frame   0x00000084       0x48 out/startup_k60.o
+ .debug_frame   0x000000cc       0x64 out/system_k60.o
+ .debug_frame   0x00000130      0x150 out/hw_gpio.o
+ .debug_frame   0x00000280       0x4c out/hw_mcg.o

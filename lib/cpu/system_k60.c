@@ -72,3 +72,34 @@ void SystemCoreClockUpdate (void)
     SystemCoreClock = temp;
 }
 
+/*
+ * 使能中断
+ */
+
+void enable_irq (int irq)
+{
+    int div;
+    if (irq > 105)
+        irq = 105;
+    div = irq / 32;
+    switch (div)
+    {
+        case 0x0:
+            NVICICPR0 |= 1 << (irq & 0x1F);
+            NVICISER0 |= 1 << (irq & 0x1F);
+            break;
+        case 0x1:
+            NVICICPR1 |= 1 << (irq & 0x1F);
+            NVICISER1 |= 1 << (irq & 0x1F);
+            break;
+        case 0x2:
+            NVICICPR2 |= 1 << (irq & 0x1F);
+            NVICISER2 |= 1 << (irq & 0x1F);
+            break;
+        case 0x3:
+            NVICICPR3 |= 1 << (irq & 0x1F);
+            NVICISER3 |= 1 << (irq & 0x1F);
+            break;
+    }
+}
+

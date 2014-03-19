@@ -47,6 +47,11 @@ void SystemInit(void);
  */
 void SystemCoreClockUpdate (void); 
 
+/*
+ * 使能中断irq
+ */
+void enable_irq (int irq);
+
 #if defined (__cplusplus)
 }
 #endif

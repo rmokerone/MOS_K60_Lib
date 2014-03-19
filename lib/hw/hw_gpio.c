@@ -7,6 +7,9 @@
 
 #include "hw_gpio.h"
 
+//用户自定义中断服务函数组
+GPIO_ISR_CALLBACK GPIO_ISR[5];
+
 /*
  * \brief GPIO通用初始化函数
  * \param gpio_init_structure
@@ -24,6 +27,7 @@ int8 MOS_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
     uint32 pins = gpio_init_structure.GPIO_Pins;
     uint8 dir = gpio_init_structure.GPIO_Dir;
     uint8 output = gpio_init_structure.GPIO_Output;
+    //GPIO_ISR_CALLBACK isr_func = gpio_init_structure.GPIO_Isr;
     
 
     if  (ptx == PTA)
@@ -36,7 +40,7 @@ int8 MOS_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
         portx = PORTD_BASE_PTR;
     else if (ptx == PTE)
         portx = PORTE_BASE_PTR;
-    else if (ptx == PTD)
+    else if (ptx == PTF)
         portx = PORTF_BASE_PTR;
     else
         return 0;
@@ -53,12 +57,107 @@ int8 MOS_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
     {
         ptx->PDDR &= ~(pins);
     }
+    //配置所选引脚的控制寄存器
     for (i =0; i < 32; i++)
     {
         if (pins&(1ul<<i))
             portx->PCR[i] = pcr;
     }
 
+    return 1;
+
+}
+
+/*
+ * LPLD_GPIO_EnableIrq
+ * 使能GPIO外部中断
+ * 
+ * 参数:
+ *    gpio_init_structure--GPIO初始化结构体， 
+ *                       具体定义见GPIO_InitTypeDef
+ *
+ * 输出:
+ *    0--配置错误
+ *    1--配置成功
+ *
+ */
+uint8 MOS_GPIO_EnableIrq(GPIO_InitTypeDef gpio_init_structure)
+{
+    GPIO_MemMapPtr ptx = gpio_init_structure.GPIO_PTx;
+    GPIO_ISR_CALLBACK isr_func = gpio_init_structure.GPIO_Isr;
+    
+    if (isr_func == NULL)
+        return 0;
+    if (ptx == PTA)
+    {
+        enable_irq(87);
+        GPIO_ISR[0] = isr_func;
+    }
+    else if (ptx == PTB)
+    {
+        enable_irq(88);
+        GPIO_ISR[1] = isr_func;
+    }
+    else if (ptx == PTC)
+    {
+        enable_irq(89);
+        GPIO_ISR[2] = isr_func;
+    }
+    else if (ptx == PTD)
+    {
+        enable_irq(90);
+        GPIO_ISR[3] = isr_func;
+    }
+    else if (ptx == PTE)
+    {
+        enable_irq(91);
+        GPIO_ISR[4] = isr_func;
+    }
+    else
+        return 0;
+    return 1;
+}
+
+/*
+ * LPLD_GPIO_DisableIrq
+ * 禁用GPIO外部中断
+ * 
+ * 参数:
+ *    gpio_init_structure--GPIO初始化结构体，
+ *                        具体定义见GPIO_InitTypeDef
+ *
+ * 输出:
+ *    0--配置错误
+ *    1--配置成功
+ *
+ */
+uint8 MOS_GPIO_DisableIrq(GPIO_InitTypeDef gpio_init_structure)
+{
+    uint8 i;
+    GPIO_MemMapPtr ptx = gpio_init_structure.GPIO_PTx;
+    PORT_MemMapPtr portx;
+    uint32 pins = gpio_init_structure.GPIO_Pins;
+ 
+    if  (ptx == PTA)
+        portx = PORTA_BASE_PTR;
+    else if (ptx == PTB)
+        portx = PORTB_BASE_PTR;
+    else if (ptx == PTC)
+        portx = PORTC_BASE_PTR;
+    else if (ptx == PTD)
+        portx = PORTD_BASE_PTR;
+    else if (ptx == PTE)
+        portx = PORTE_BASE_PTR;
+    else if (ptx == PTF)
+        portx = PORTF_BASE_PTR;
+    else
+        return 0;
+    //配置所选引脚的控制寄存器
+    for (i =0; i < 32; i++)
+    {
+        if (pins&(1ul<<i))
+            portx->PCR[i] &= ~(PORT_PCR_IRQC_MASK);
+    }
     return 1;
 }
 
@@ -95,3 +194,35 @@ uint32 MOS_GPIO_Input(GPIO_MemMapPtr ptx)
     tmp = ptx->PDIR;
     return (tmp);
 }
+
+/*
+ * PORTA-PORTE中断处理函数
+ */
+void PORTA_IRQHandler (void)
+{
+    GPIO_ISR[0]();
+    PORTA_ISFR = 0xFFFFFFFF;
+}
+void PORTB_IRQHandler (void)
+{
+    GPIO_ISR[1]();
+    PORTB_ISFR = 0xFFFFFFFF;
+}
+void PORTC_IRQHandler (void)
+{
+    GPIO_ISR[2]();
+    PORTC_ISFR = 0xFFFFFFFF;
+}
+
+void PORTD_IRQHandler (void)
+{
+    GPIO_ISR[3]();
+    PORTD_ISFR = 0xFFFFFFFF;
+}
+
+void PORTE_IRQHandler (void)
+{
+    GPIO_ISR[4]();
+    PORTE_ISFR = 0xFFFFFFFF;
+}
+
