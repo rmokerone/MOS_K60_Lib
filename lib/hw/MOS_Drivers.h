@@ -69,5 +69,6 @@ typedef enum PortPinsEnum
 
 #include "hw_gpio.h"
 #include "hw_mcg.h"
+#include "hw_uart.h"
 
 #endif

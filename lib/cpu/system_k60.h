@@ -52,6 +52,11 @@ void SystemCoreClockUpdate (void);
  */
 void enable_irq (int irq);
 
+/*
+ * 关闭中断irq
+ */
+void disable_irq(int irq);
+
 #if defined (__cplusplus)
 }
 #endif

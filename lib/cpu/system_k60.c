@@ -67,8 +67,8 @@ void SystemInit(void)
 void SystemCoreClockUpdate (void) 
 {
     uint32_t temp;
-    temp =  CPU_XTAL_CLK_HZ *((uint32_t)(MCG_C6 & MCG_C6_VDIV_MASK) + 24u );
-    temp = (uint32_t)(temp/((uint32_t)(MCG_C5 & MCG_C5_PRDIV_MASK) +1u ));
+    temp =  CPU_XTAL_CLK_HZ *((uint32_t)(MCG_C6 & MCG_C6_VDIV_MASK) + 16u );
+    temp = (uint32_t)(temp/((uint32_t)(MCG_C5 & MCG_C5_PRDIV_MASK) +1u ))/2;
     SystemCoreClock = temp;
 }
 
@@ -99,6 +99,33 @@ void enable_irq (int irq)
         case 0x3:
             NVICICPR3 |= 1 << (irq & 0x1F);
             NVICISER3 |= 1 << (irq & 0x1F);
+            break;
+    }
+}
+
+/*
+ * 关闭中断
+ */
+
+void disable_irq (int irq)
+{
+    int div;
+    if (irq > 105)
+        irq = 105;
+    div = irq / 32;
+    switch (div)
+    {
+        case 0x0:
+            NVICICPR0 |= 1 << (irq & 0x1F);
+            break;
+        case 0x1:
+            NVICICPR1 |= 1 << (irq & 0x1F);
+            break;
+        case 0x2:
+            NVICICPR2 |= 1 << (irq & 0x1F);
+            break;
+        case 0x3:
+            NVICICPR3 |= 1 << (irq & 0x1F);
             break;
     }
 }

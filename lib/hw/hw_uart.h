@@ -8,6 +8,13 @@
 #ifndef __HW_UART_H_
 #define __HW_UART_H_
 
+#define UART0 UART0_BASE_PTR
+#define UART1 UART1_BASE_PTR
+#define UART2 UART2_BASE_PTR
+#define UART3 UART3_BASE_PTR
+#define UART4 UART4_BASE_PTR
+#define UART5 UART5_BASE_PTR
+
 //UART模块中断回调函数类型
 typedef void (*UART_ISR_CALLBACK)(void);
 
@@ -94,7 +101,7 @@ typedef struct
     初始化：
       不必须初始化、如未初始化则不会触发中断
   */
-  //UART_ISR_CALLBACK UART_RxIsr; 
+  UART_ISR_CALLBACK UART_RxIsr; 
   
   /*
     描述：
@@ -104,22 +111,22 @@ typedef struct
     初始化：
       不必须初始化、如未初始化则不会触发中断
   */
-  //UART_ISR_CALLBACK UART_TxIsr; 
+  UART_ISR_CALLBACK UART_TxIsr; 
 } UART_InitTypeDef;
 
 //初始化uart通道、波特率、发送接收引脚
-void lpld_uart_init(UART_InitTypeDef);
+void LPLD_UART_Init(UART_InitTypeDef);
 //uart获取一个字符
-int8 lpld_uart_getchar(UART_MemMapPtr);
+int8 LPLD_UART_GetChar(UART_MemMapPtr);
 //检查是否接收到字符
-int32 lpld_uart_getchar_present(UART_MemMapPtr);
+int32 LPLD_UART_GetChar_Present(UART_MemMapPtr);
 //uart发送一个字符
-void lpld_uart_putchar(UART_MemMapPtr, int8);
+void LPLD_UART_PutChar(UART_MemMapPtr, int8);
 //uart发送字符数组
-void lpld_uart_putchararr(UART_MemMapPtr, int8*, int32);
+void LPLD_UART_PutCharArr(UART_MemMapPtr, char *, int32);
 //uart中断使能
-void lpld_uart_enableirq(UART_InitTypeDef);
+void LPLD_UART_EnableIrq(UART_InitTypeDef);
 //uart中断禁用
-void lpld_uart_disableirq(UART_InitTypeDef);
+void LPLD_UART_DisableIrq(UART_InitTypeDef);
 
 #endif
