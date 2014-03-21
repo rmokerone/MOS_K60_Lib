@@ -10,6 +10,13 @@
 
 #include "common.h"
 
+#define PORTA   PORTA_BASE_PTR
+#define PORTB   PORTB_BASE_PTR
+#define PORTC   PORTC_BASE_PTR
+#define PORTD   PORTD_BASE_PTR
+#define PORTE   PORTE_BASE_PTR
+#define PORTF   PORTF_BASE_PTR
+
 //宏定义初始化函数用到的参数
 //GPIO_InitTypeDef->GPIO_Dir
 #define DIR_INPUT   0 //输入

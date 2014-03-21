@@ -24,13 +24,13 @@ OBJDUMP = $(TOOLCHAIN)objdump
 # application specific
 CPU := cortex-m4
 INSTRUCTION_MODE := thumb
-TARGET := k60_gpio_demo
+TARGET := main
 TARGET_EXT := elf
-LD_SCRIPT := ../lib/link/k60n512_flash.ld
+LD_SCRIPT := ../../lib/link/k60n512_flash.ld
 
 LIB := 
 
-LIBS := ../lib
+LIBS := ../../lib
 
 # directories
 INC_DIRS = . $(LIBS)/common $(LIBS)/cpu $(LIBS)/cpu/headers $(LIBS)/. $(LIBS)/hw
