@@ -13,6 +13,9 @@
  #include <stdint.h>
  #include "common.h"
 
+//声明系统显示终端初始化函数
+ void systemTerm(void);
+
 /*-------------------------------------------------------------
  * 定义时钟相关值
  * -----------------------------------------------------------*/
@@ -53,6 +56,8 @@ void SystemInit(void)
   g_flexbus_clock =  g_core_clock / ((uint32_t)((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV3_MASK) >> SIM_CLKDIV1_OUTDIV3_SHIFT)+ 1u);
   g_flash_clock =  g_core_clock / ((uint32_t)((SIM_CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT)+ 1u);
  
+    //初始化系统终端
+  systemTerm ();
 }
 
 /**
@@ -130,3 +135,18 @@ void disable_irq (int irq)
     }
 }
 
+/*
+ * 系统终端初始化函数
+ */
+
+ void systemTerm (void)
+ {
+     UART_InitTypeDef uart_init_struct;
+     uart_init_struct.UART_Uartx = UART0;
+     uart_init_struct.UART_BaudRate = 9600;
+     uart_init_struct.UART_RxPin = PTB16;
+     uart_init_struct.UART_TxPin = PTB17;
+
+     LPLD_UART_Init (uart_init_struct);
+
+ }

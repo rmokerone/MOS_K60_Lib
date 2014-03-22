@@ -55,5 +55,9 @@
 */
 #define FLASH_CLK_MHZ       25u    
 
+/*
+ * 定义printf函数要使用的输出端口 
+ */
+#define TERM_PORT          UART0
 
 #endif

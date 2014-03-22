@@ -18,6 +18,9 @@
 #include "derivative.h"
 #include <stdint.h>
 
+//引用标准函数库
+#include "io.h"
+
 //定义常用的数据类型
 typedef unsigned char	uint8;  /*  8 bits */
 typedef unsigned short int	uint16; /* 16 bits */

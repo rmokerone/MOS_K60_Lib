@@ -17,11 +17,13 @@ int main (void)
     char recv;
 
     uart_init();
+
     LPLD_UART_PutCharArr (UART0, "Input something:\r\n",18);
     while (1)
     {
         recv = LPLD_UART_GetChar (UART0);
-        LPLD_UART_PutChar (UART0, recv);
+        //LPLD_UART_PutChar (UART0, recv);
+        printf ("%c",recv);
         //LPLD_UART_PutCharArr (UART0, "Input something:\r\n",18);
     }
     return 0;
@@ -40,7 +42,7 @@ void uart_init(void)
 void delay (void)
 {
     int x,i;
-    for (x = 0xfff; x > 0; x--)
+    for (x = 0xff; x > 0; x--)
         for (i = 0xffff; i > 0; i--);
     
 }

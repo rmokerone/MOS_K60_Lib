@@ -8,6 +8,8 @@
 #ifndef __HW_UART_H_
 #define __HW_UART_H_
 
+#include <stdio.h>
+
 #define UART0 UART0_BASE_PTR
 #define UART1 UART1_BASE_PTR
 #define UART2 UART2_BASE_PTR
