@@ -1,0 +1,532 @@
+Archive member included because of file (symbol)
+
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubdf3.o)
+                              out/main.o (__aeabi_f2d)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivdf3.o)
+                              out/main.o (__aeabi_dmul)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_truncdfsf2.o)
+                              out/main.o (__aeabi_d2f)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+                              out/main.o (__aeabi_i2f)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+                              out/main.o (__aeabi_fmul)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixsfsi.o)
+                              out/main.o (__aeabi_f2iz)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+                              out/printf.o (strlen)
+
+Allocating common symbols
+Common symbol       size              file
+
+ADC_ISR             0x8               out/hw_adc.o
+GPIO_ISR            0x14              out/hw_gpio.o
+UART_T_ISR          0x18              out/hw_uart.o
+UART_R_ISR          0x18              out/hw_uart.o
+adc_init_struct     0x14              out/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+VECTORS          0x00000000         0x00000410         xr
+FLASH            0x00000800         0x0007f800         xr
+SRAM_U           0x1fff0000         0x00010000         xrw
+SRAM_L           0x20000000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD out/main.o
+LOAD out/startup_k60.o
+LOAD out/system_k60.o
+LOAD out/hw_adc.o
+LOAD out/hw_gpio.o
+LOAD out/hw_mcg.o
+LOAD out/hw_uart.o
+LOAD out/io.o
+LOAD out/printf.o
+START GROUP
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libc.a
+END GROUP
+
+.vectortable    0x00000000      0x410
+                0x00000000                __vector_table = .
+                0x00000000                . = ALIGN (0x4)
+ *(.vectors)
+ .vectors       0x00000000      0x410 out/startup_k60.o
+                0x00000000                g_pfnVectors
+                0x00000410                . = ALIGN (0x4)
+
+.text           0x00000800     0x3848
+                0x00000800                . = ALIGN (0x4)
+ *(.text)
+ .text          0x00000800      0x248 out/main.o
+                0x00000800                main
+                0x00000848                delay
+                0x00000884                adc_init
+                0x00000908                convert
+                0x0000094c                adc_get_ave
+                0x000009a0                adc_result_to_velocity
+ .text          0x00000a48       0xac out/startup_k60.o
+                0x00000a48                CAN0_Rx_Warning_IRQHandler
+                0x00000a48                I2C0_IRQHandler
+                0x00000a48                CAN1_ORed_Message_buffer_IRQHandler
+                0x00000a48                UART3_RX_TX_IRQHandler
+                0x00000a48                UART0_RX_TX_IRQHandler
+                0x00000a48                I2C1_IRQHandler
+                0x00000a48                DMA2_IRQHandler
+                0x00000a48                ENET_Error_IRQHandler
+                0x00000a48                CAN0_Tx_Warning_IRQHandler
+                0x00000a48                PIT0_IRQHandler
+                0x00000a48                CAN0_ORed_Message_buffer_IRQHandler
+                0x00000a48                Watchdog_IRQHandler
+                0x00000a48                CMP2_IRQHandler
+                0x00000a48                I2S0_IRQHandler
+                0x00000a48                TSI0_IRQHandler
+                0x00000a48                ENET_Receive_IRQHandler
+                0x00000a48                ENET_1588_Timer_IRQHandler
+                0x00000a48                CAN1_Error_IRQHandler
+                0x00000a48                UART2_RX_TX_IRQHandler
+                0x00000a48                CMT_IRQHandler
+                0x00000a48                UART4_RX_TX_IRQHandler
+                0x00000a48                SPI1_IRQHandler
+                0x00000a48                DMA9_IRQHandler
+                0x00000a48                DMA14_IRQHandler
+                0x00000a48                CMP1_IRQHandler
+                0x00000a48                UART4_ERR_IRQHandler
+                0x00000a48                PIT2_IRQHandler
+                0x00000a48                LPTimer_IRQHandler
+                0x00000a48                DMA5_IRQHandler
+                0x00000a48                RTC_IRQHandler
+                0x00000a48                PDB0_IRQHandler
+                0x00000a48                CAN1_Bus_Off_IRQHandler
+                0x00000a48                FTM1_IRQHandler
+                0x00000a48                UART5_RX_TX_IRQHandler
+                0x00000a48                UART3_ERR_IRQHandler
+                0x00000a48                PIT3_IRQHandler
+                0x00000a48                SDHC_IRQHandler
+                0x00000a48                MCG_IRQHandler
+                0x00000a48                UART2_ERR_IRQHandler
+                0x00000a48                DMA11_IRQHandler
+                0x00000a48                UART5_ERR_IRQHandler
+                0x00000a48                Read_Collision_IRQHandler
+                0x00000a48                Default_Handler
+                0x00000a48                DMA7_IRQHandler
+                0x00000a48                ENET_Transmit_IRQHandler
+                0x00000a48                USB_IRQHandler
+                0x00000a48                CAN1_Tx_Warning_IRQHandler
+                0x00000a48                USB0_IRQHandler
+                0x00000a48                LLW_IRQHandler
+                0x00000a48                SPI2_IRQHandler
+                0x00000a48                CAN1_Rx_Warning_IRQHandler
+                0x00000a48                CAN1_Wake_Up_IRQHandler
+                0x00000a48                DMA13_IRQHandler
+                0x00000a48                DMA3_IRQHandler
+                0x00000a48                RNG_IRQHandler
+                0x00000a48                DMA0_IRQHandler
+                0x00000a48                DMA15_IRQHandler
+                0x00000a48                DAC0_IRQHandler
+                0x00000a48                Software_IRQHandler
+                0x00000a48                CAN0_Error_IRQHandler
+                0x00000a48                DMA4_IRQHandler
+                0x00000a48                PIT1_IRQHandler
+                0x00000a48                UART0_ERR_IRQHandler
+                0x00000a48                DMA_Error_IRQHandler
+                0x00000a48                LVD_LVW_IRQHandler
+                0x00000a48                SPI0_IRQHandler
+                0x00000a48                FTM0_IRQHandler
+                0x00000a48                DAC1_IRQHandler
+                0x00000a48                MCM_IRQHandler
+                0x00000a48                DMA12_IRQHandler
+                0x00000a48                FTFL_IRQHandler
+                0x00000a48                CAN0_Bus_Off_IRQHandler
+                0x00000a48                FTM2_IRQHandler
+                0x00000a48                DMA8_IRQHandler
+                0x00000a48                DMA10_IRQHandler
+                0x00000a48                CAN0_Wake_Up_IRQHandler
+                0x00000a48                UART1_ERR_IRQHandler
+                0x00000a48                UART1_RX_TX_IRQHandler
+                0x00000a48                CMP0_IRQHandler
+                0x00000a48                DMA6_IRQHandler
+                0x00000a48                DMA1_IRQHandler
+                0x00000a50                Reset_Handler
+ .text          0x00000af4      0x40c out/system_k60.o
+                0x00000af4                SystemInit
+                0x00000be8                SystemCoreClockUpdate
+                0x00000c4c                enable_irq
+                0x00000dd4                disable_irq
+                0x00000ec8                systemTerm
+ .text          0x00000f00      0x8e0 out/hw_adc.o
+                0x00000f00                LPLD_ADC_Init
+                0x000010cc                LPLD_ADC_Deinit
+                0x0000117c                LPLD_ADC_Get
+                0x000011d0                LPLD_ADC_EnableConversion
+                0x00001230                LPLD_ADC_GetResult
+                0x00001258                LPLD_ADC_GetSC1nCOCO
+                0x00001294                LPLD_ADC_EnableIrq
+                0x000012f4                LPLD_ADC_DisableIrq
+                0x00001354                LPLD_ADC_Chn_Enable
+                0x000017b8                ADC0_IRQHandler
+                0x000017cc                ADC1_IRQHandler
+ .text          0x000017e0      0x448 out/hw_gpio.o
+                0x000017e0                MOS_GPIO_Init
+                0x00001924                MOS_GPIO_EnableIrq
+                0x00001a18                MOS_GPIO_DisableIrq
+                0x00001b20                MOS_GPIO_Output
+                0x00001b3c                MOS_GPIO_Toggle
+                0x00001b58                MOS_GPIO_Input
+                0x00001b74                PORTA_IRQHandler
+                0x00001b98                PORTB_IRQHandler
+                0x00001bbc                PORTC_IRQHandler
+                0x00001be0                PORTD_IRQHandler
+                0x00001c04                PORTE_IRQHandler
+ .text          0x00001c28      0x328 out/hw_mcg.o
+                0x00001c28                LPLD_PLL_Setup
+                0x00001eb0                LPLD_Set_SYS_DIV
+ .text          0x00001f50      0x990 out/hw_uart.o
+                0x00001f50                LPLD_UART_Init
+                0x0000242c                LPLD_UART_GetChar
+                0x0000245c                LPLD_UART_GetChar_Present
+                0x0000247c                LPLD_UART_PutChar
+                0x000024a8                LPLD_UART_PutCharArr
+                0x000024f0                LPLD_UART_EnableIrq
+                0x00002598                LPLD_UART_DisableIrq
+                0x00002640                UART0_IRQHandler
+                0x000026b0                UART1_IRQHandler
+                0x00002720                UART2_IRQHandler
+                0x00002790                UART3_IRQHandler
+                0x00002800                UART4_IRQHandler
+                0x00002870                UART5_IRQHandler
+ .text          0x000028e0       0x54 out/io.o
+                0x000028e0                in_char
+                0x000028f8                out_char
+                0x0000291c                char_present
+ .text          0x00002934      0x954 out/printf.o
+                0x00002b1c                printk
+                0x000031f8                printf
+                0x00003238                sprintf
+ .text          0x00003288      0x370 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubdf3.o)
+                0x00003288                __aeabi_drsub
+                0x00003290                __aeabi_dsub
+                0x00003290                __subdf3
+                0x00003294                __adddf3
+                0x00003294                __aeabi_dadd
+                0x0000350c                __aeabi_ui2d
+                0x0000350c                __floatunsidf
+                0x0000352c                __floatsidf
+                0x0000352c                __aeabi_i2d
+                0x00003550                __extendsfdf2
+                0x00003550                __aeabi_f2d
+                0x0000358c                __aeabi_ul2d
+                0x0000358c                __floatundidf
+                0x0000359c                __floatdidf
+                0x0000359c                __aeabi_l2d
+ .text          0x000035f8      0x424 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivdf3.o)
+                0x000035f8                __aeabi_dmul
+                0x000035f8                __muldf3
+                0x0000384c                __aeabi_ddiv
+                0x0000384c                __divdf3
+ .text          0x00003a1c       0xa0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_truncdfsf2.o)
+                0x00003a1c                __aeabi_d2f
+                0x00003a1c                __truncdfsf2
+ .text          0x00003abc      0x21c /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+                0x00003abc                __aeabi_frsub
+                0x00003ac4                __subsf3
+                0x00003ac4                __aeabi_fsub
+                0x00003ac8                __aeabi_fadd
+                0x00003ac8                __addsf3
+                0x00003c28                __aeabi_ui2f
+                0x00003c28                __floatunsisf
+                0x00003c30                __aeabi_i2f
+                0x00003c30                __floatsisf
+                0x00003c4c                __floatundisf
+                0x00003c4c                __aeabi_ul2f
+                0x00003c5c                __floatdisf
+                0x00003c5c                __aeabi_l2f
+ .text          0x00003cd8      0x2a0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+                0x00003cd8                __mulsf3
+                0x00003cd8                __aeabi_fmul
+                0x00003e40                __divsf3
+                0x00003e40                __aeabi_fdiv
+ .text          0x00003f78       0x4c /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixsfsi.o)
+                0x00003f78                __fixsfsi
+                0x00003f78                __aeabi_f2iz
+ .text          0x00003fc4        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.text*)
+ .text.strlen   0x00003fc4       0x60 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+                0x00003fc4                strlen
+ *(.rodata)
+ .rodata        0x00004024       0x24 out/main.o
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x00004048                . = ALIGN (0x4)
+                0x00004048                _etext = .
+
+.vfp11_veneer   0x00004048        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00004048        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x00004048        0x0
+ .iplt          0x00000000        0x0 out/main.o
+
+.rel.dyn        0x00004048        0x0
+ .rel.iplt      0x00000000        0x0 out/main.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00004048                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00004048                __exidx_end = .
+
+.preinit_array  0x00004048        0x0
+                0x00004048                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array*)
+                0x00004048                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x00004048        0x0
+                0x00004048                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*))
+ *(.init_array*)
+                0x00004048                PROVIDE (__init_array_end, .)
+
+.fini_array     0x00004048        0x0
+                0x00004048                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*))
+ *(.fini_array*)
+                0x00004048                PROVIDE (__fini_array_end, .)
+                0x00004048                __etext = .
+
+.data           0x1fff0000       0x14 load address 0x00004048
+                0x1fff0000                . = ALIGN (0x4)
+                0x1fff0000                _sdata = .
+ *(.data)
+ .data          0x1fff0000        0x0 out/main.o
+ .data          0x1fff0000        0x0 out/startup_k60.o
+ .data          0x1fff0000        0x4 out/system_k60.o
+                0x1fff0000                SystemCoreClock
+ .data          0x1fff0004        0x0 out/hw_adc.o
+ .data          0x1fff0004        0x0 out/hw_gpio.o
+ .data          0x1fff0004       0x10 out/hw_mcg.o
+                0x1fff0004                g_core_clock
+                0x1fff0008                g_bus_clock
+                0x1fff000c                g_flash_clock
+                0x1fff0010                g_flexbus_clock
+ .data          0x1fff0014        0x0 out/hw_uart.o
+ .data          0x1fff0014        0x0 out/io.o
+ .data          0x1fff0014        0x0 out/printf.o
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubdf3.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivdf3.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_truncdfsf2.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixsfsi.o)
+ .data          0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.data*)
+                0x1fff0014                . = ALIGN (0x4)
+                0x1fff0014                _edata = .
+
+.igot.plt       0x1fff0014        0x0 load address 0x0000405c
+ .igot.plt      0x00000000        0x0 out/main.o
+                0x1fff0014                . = ALIGN (0x4)
+
+.bss            0x1fff0014       0x60 load address 0x0000405c
+                0x1fff0014                _sbss = .
+ *(.bss)
+ .bss           0x1fff0014        0x0 out/main.o
+ .bss           0x1fff0014        0x0 out/startup_k60.o
+ .bss           0x1fff0014        0x0 out/system_k60.o
+ .bss           0x1fff0014        0x0 out/hw_adc.o
+ .bss           0x1fff0014        0x0 out/hw_gpio.o
+ .bss           0x1fff0014        0x0 out/hw_mcg.o
+ .bss           0x1fff0014        0x0 out/hw_uart.o
+ .bss           0x1fff0014        0x0 out/io.o
+ .bss           0x1fff0014        0x0 out/printf.o
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivdf3.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_truncdfsf2.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixsfsi.o)
+ .bss           0x1fff0014        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x1fff0014       0x14 out/main.o
+                0x1fff0014                adc_init_struct
+ COMMON         0x1fff0028        0x8 out/hw_adc.o
+                0x1fff0028                ADC_ISR
+ COMMON         0x1fff0030       0x14 out/hw_gpio.o
+                0x1fff0030                GPIO_ISR
+ COMMON         0x1fff0044       0x30 out/hw_uart.o
+                0x1fff0044                UART_T_ISR
+                0x1fff005c                UART_R_ISR
+                0x1fff0074                . = ALIGN (0x4)
+                0x1fff0074                _ebss = .
+
+.heap           0x1fff0074        0x0
+                0x1fff0074                __end__ = .
+                0x1fff0074                end = __end__
+ *(.heap*)
+                0x1fff0074                __HeapLimit = .
+
+.stack_dummy    0x1fff0074        0x0
+ *(.stack*)
+                0x20000000                __StackTop = (ORIGIN (SRAM_U) + 0x10000)
+                0x20000000                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x20000000                PROVIDE (__stack, __StackTop)
+                0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
+
+.ARM.attributes
+                0x00000000       0x33
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x33 out/main.o
+ .ARM.attributes
+                0x00000033       0x33 out/startup_k60.o
+ .ARM.attributes
+                0x00000066       0x33 out/system_k60.o
+ .ARM.attributes
+                0x00000099       0x33 out/hw_adc.o
+ .ARM.attributes
+                0x000000cc       0x33 out/hw_gpio.o
+ .ARM.attributes
+                0x000000ff       0x33 out/hw_mcg.o
+ .ARM.attributes
+                0x00000132       0x33 out/hw_uart.o
+ .ARM.attributes
+                0x00000165       0x33 out/io.o
+ .ARM.attributes
+                0x00000198       0x33 out/printf.o
+ .ARM.attributes
+                0x000001cb       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x000001e9       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivdf3.o)
+ .ARM.attributes
+                0x00000207       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_truncdfsf2.o)
+ .ARM.attributes
+                0x00000225       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .ARM.attributes
+                0x00000243       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .ARM.attributes
+                0x00000261       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixsfsi.o)
+ .ARM.attributes
+                0x0000027f       0x2e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+OUTPUT(out/main.elf elf32-littlearm)
+
+.debug_info     0x00000000     0x463d
+ .debug_info    0x00000000      0x558 out/main.o
+ .debug_info    0x00000558      0x103 out/startup_k60.o
+ .debug_info    0x0000065b      0xd20 out/system_k60.o
+ .debug_info    0x0000137b      0xd94 out/hw_adc.o
+ .debug_info    0x0000210f      0x504 out/hw_gpio.o
+ .debug_info    0x00002613      0x6d3 out/hw_mcg.o
+ .debug_info    0x00002ce6     0x101f out/hw_uart.o
+ .debug_info    0x00003d05      0x41d out/io.o
+ .debug_info    0x00004122      0x51b out/printf.o
+
+.debug_abbrev   0x00000000      0xd8c
+ .debug_abbrev  0x00000000      0x188 out/main.o
+ .debug_abbrev  0x00000188       0xab out/startup_k60.o
+ .debug_abbrev  0x00000233      0x1a4 out/system_k60.o
+ .debug_abbrev  0x000003d7      0x25f out/hw_adc.o
+ .debug_abbrev  0x00000636      0x16d out/hw_gpio.o
+ .debug_abbrev  0x000007a3      0x144 out/hw_mcg.o
+ .debug_abbrev  0x000008e7      0x205 out/hw_uart.o
+ .debug_abbrev  0x00000aec       0xf9 out/io.o
+ .debug_abbrev  0x00000be5      0x1a7 out/printf.o
+
+.debug_loc      0x00000000      0xd06
+ .debug_loc     0x00000000      0x150 out/main.o
+ .debug_loc     0x00000150       0x64 out/startup_k60.o
+ .debug_loc     0x000001b4      0x10c out/system_k60.o
+ .debug_loc     0x000002c0      0x2b8 out/hw_adc.o
+ .debug_loc     0x00000578      0x250 out/hw_gpio.o
+ .debug_loc     0x000007c8       0x70 out/hw_mcg.o
+ .debug_loc     0x00000838      0x29c out/hw_uart.o
+ .debug_loc     0x00000ad4       0x90 out/io.o
+ .debug_loc     0x00000b64      0x1a2 out/printf.o
+
+.debug_aranges  0x00000000      0x120
+ .debug_aranges
+                0x00000000       0x20 out/main.o
+ .debug_aranges
+                0x00000020       0x20 out/startup_k60.o
+ .debug_aranges
+                0x00000040       0x20 out/system_k60.o
+ .debug_aranges
+                0x00000060       0x20 out/hw_adc.o
+ .debug_aranges
+                0x00000080       0x20 out/hw_gpio.o
+ .debug_aranges
+                0x000000a0       0x20 out/hw_mcg.o
+ .debug_aranges
+                0x000000c0       0x20 out/hw_uart.o
+ .debug_aranges
+                0x000000e0       0x20 out/io.o
+ .debug_aranges
+                0x00000100       0x20 out/printf.o
+
+.debug_line     0x00000000      0xf6e
+ .debug_line    0x00000000      0x1fe out/main.o
+ .debug_line    0x000001fe       0x70 out/startup_k60.o
+ .debug_line    0x0000026e      0x191 out/system_k60.o
+ .debug_line    0x000003ff      0x20f out/hw_adc.o
+ .debug_line    0x0000060e      0x19b out/hw_gpio.o
+ .debug_line    0x000007a9      0x18a out/hw_mcg.o
+ .debug_line    0x00000933      0x267 out/hw_uart.o
+ .debug_line    0x00000b9a       0xf8 out/io.o
+ .debug_line    0x00000c92      0x2dc out/printf.o
+
+.debug_str      0x00000000     0x16b2
+ .debug_str     0x00000000      0x319 out/main.o
+                                0x367 (size before relaxing)
+ .debug_str     0x00000319       0x7b out/startup_k60.o
+                                0x126 (size before relaxing)
+ .debug_str     0x00000394      0x5e3 out/system_k60.o
+                                0x720 (size before relaxing)
+ .debug_str     0x00000977      0x7e4 out/hw_adc.o
+                                0xbc1 (size before relaxing)
+ .debug_str     0x0000115b      0x197 out/hw_gpio.o
+                                0x33c (size before relaxing)
+ .debug_str     0x000012f2      0x107 out/hw_mcg.o
+                                0x3d0 (size before relaxing)
+ .debug_str     0x000013f9      0x165 out/hw_uart.o
+                                0xdd2 (size before relaxing)
+ .debug_str     0x0000155e       0x34 out/io.o
+                                0x23f (size before relaxing)
+ .debug_str     0x00001592      0x120 out/printf.o
+                                0x26f (size before relaxing)
+
+.comment        0x00000000       0x70
+ .comment       0x00000000       0x70 out/main.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 out/startup_k60.o
+ .comment       0x00000000       0x71 out/system_k60.o
+ .comment       0x00000000       0x71 out/hw_adc.o
+ .comment       0x00000000       0x71 out/hw_gpio.o
+ .comment       0x00000000       0x71 out/hw_mcg.o
+ .comment       0x00000000       0x71 out/hw_uart.o
+ .comment       0x00000000       0x71 out/io.o
+ .comment       0x00000000       0x71 out/printf.o
+
+.debug_frame    0x00000000      0x7d0
+ .debug_frame   0x00000000       0xcc out/main.o
+ .debug_frame   0x000000cc       0x48 out/startup_k60.o
+ .debug_frame   0x00000114       0xa0 out/system_k60.o
+ .debug_frame   0x000001b4      0x170 out/hw_adc.o
+ .debug_frame   0x00000324      0x150 out/hw_gpio.o
+ .debug_frame   0x00000474       0x4c out/hw_mcg.o
+ .debug_frame   0x000004c0      0x18c out/hw_uart.o
+ .debug_frame   0x0000064c       0x68 out/io.o
+ .debug_frame   0x000006b4       0xfc out/printf.o
+ .debug_frame   0x000007b0       0x20 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)

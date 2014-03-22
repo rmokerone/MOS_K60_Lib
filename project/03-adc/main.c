@@ -15,7 +15,7 @@ int16 adc_get_ave (void);
 //采样结果转换成角速度
 int16 adc_result_to_velocity (int16 ar);
 
-#define STATIC_ADC_RESULT 46 
+#define STATIC_ADC_RESULT 3043 
 
 ADC_InitTypeDef adc_init_struct;
 
@@ -26,6 +26,7 @@ int main (void)
     while (1)
     {
         result = adc_get_ave();
+        printf ("the adc get_ave = %d\n", result);
         printf ("= %ddeg/s\n", adc_result_to_velocity(result - STATIC_ADC_RESULT));
     }
     return 0;
