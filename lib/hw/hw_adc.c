@@ -578,8 +578,8 @@ static uint8 LPLD_ADC_Cal(ADC_MemMapPtr adcx)
   adcx->CV1  = 0x1234u ; 
   adcx->CV2  = 0x5678u ;
   
-  adcx->SC2 = 0 & (~ADC_SC2_ADTRG_MASK)        //使能软件触发作为校准
-                | ADC_SC2_REFSEL(REFSEL_EXT);  //选择外部参考源VREFH和VREFL
+  adcx->SC2 &=  (~ADC_SC2_ADTRG_MASK);        //使能软件触发作为校准
+  adcx->SC2 |=  ADC_SC2_REFSEL(REFSEL_EXT);  //选择外部参考源VREFH和VREFL
     
   adcx->SC3 &= ( ~ADC_SC3_ADCO_MASK & ~ADC_SC3_AVGS_MASK );  //设置单次转换，清除平均标志
   adcx->SC3 |= ( ADC_SC3_AVGE_MASK | ADC_SC3_AVGS(HW_32AVG) );//打开平均标志，设置到最大采样平准
