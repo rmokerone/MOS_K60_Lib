@@ -31,6 +31,10 @@ uint8 LPLD_PLL_Setup(PllOptionEnum_Type core_clk_mhz)
   uint8 prdiv, vdiv;
   uint8 core_div, bus_div, flexbus_div, flash_div;
   
+  core_div = 0;
+  bus_div = 0;
+  flexbus_div = 0;
+  flash_div = 0;
 /*
  *************************************************
   【LPLD注解】MCG关键系数
@@ -72,7 +76,7 @@ uint8 LPLD_PLL_Setup(PllOptionEnum_Type core_clk_mhz)
     return LPLD_PLL_Setup(PLL_120);
   }
   pll_freq = core_clk_mhz * 1;
-  core_div = 0;
+  //core_div = 0;
   if((bus_div = (uint8)(core_clk_mhz/BUS_CLK_MHZ - 1u)) == (uint8)-1)
   {
     bus_div = 0;
@@ -101,15 +105,18 @@ uint8 LPLD_PLL_Setup(PllOptionEnum_Type core_clk_mhz)
   // 这里假设复位后 MCG 模块默认为 FEI 模式 
   
   // 首先移动到 FBE 模式
-  MCG_C2 = 0;
-  
+  MCG_C2 &= ~0x02;
+  //编码1 RANGE = 1
+  MCG_C2 |= MCG_C2_RANGE(1);
+
   // 振荡器初始化完成后,释放锁存状态下的 oscillator 和 GPIO 
   SIM_SCGC4 |= SIM_SCGC4_LLWU_MASK;
 //  LLWU->CS |= LLWU_CS_ACKISO_MASK;
   
   // 选择外部 oscilator 、参考分频器 and 清零 IREFS 启动外部osc
-  // CLKS=2, FRDIV=3, IREFS=0, IRCLKEN=0, IREFSTEN=0
-  MCG_C1 = MCG_C1_CLKS(2) | MCG_C1_FRDIV(3);  
+  // CLKS=2, FRDIV=7, IRCLKEN=0, IREFSTEN=0
+  // 分频值预留我也不值到分频到多少了...
+  MCG_C1 = MCG_C1_CLKS(2) | MCG_C1_FRDIV(7);  
   
   while (MCG_S & MCG_S_IREFST_MASK){}; // 等待参考时钟清零
   

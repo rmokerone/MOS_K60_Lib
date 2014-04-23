@@ -169,7 +169,7 @@ uint8 MOS_GPIO_DisableIrq(GPIO_InitTypeDef gpio_init_structure)
  */
 void MOS_GPIO_Output(GPIO_MemMapPtr ptx, uint32 data32)
 {
-    ptx->PDOR = data32;
+    ptx->PDOR |= data32;
 }
 
 /*

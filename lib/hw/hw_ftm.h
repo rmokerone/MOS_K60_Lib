@@ -13,7 +13,7 @@
 #define FTM0    FTM0_BASE_PTR
 #define FTM1    FTM1_BASE_PTR
 #define FTM2    FTM2_BASE_PTR
-
+#define FTM3    FTM3_BASE_PTR
 
 //FTM通道枚举定义
 typedef enum FtmChnEnum

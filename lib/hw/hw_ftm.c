@@ -65,6 +65,11 @@ uint8 LPLD_FTM_Init(FTM_InitTypeDef ftm_init_structure)
     i=2;
     SIM_SCGC3 |= SIM_SCGC3_FTM2_MASK;
   }
+  else if (ftm_init_structure.FTM_Ftmx == FTM3)
+  {
+      i = 3;
+      SIM_SCGC3 |= SIM_SCGC3_FTM3_MASK;
+  }
   else
   {
     return 0;
@@ -128,6 +133,10 @@ uint8 LPLD_FTM_Deinit(FTM_InitTypeDef ftm_init_structure)
   else if(ftm_init_structure.FTM_Ftmx == FTM2)
   {
     SIM_SCGC3 &= ~SIM_SCGC3_FTM2_MASK;
+  }
+  else if (ftm_init_structure.FTM_Ftmx == FTM3)
+  {
+      SIM_SCGC3 &= ~SIM_SCGC3_FTM3_MASK;
   }
   else
   {
@@ -224,14 +233,14 @@ uint8 LPLD_FTM_PWM_Enable(FTM_MemMapPtr  ftmx, FtmChnEnum_Type chn, uint32 duty,
  *      |__FTM1          --FTM1
  *      |__FTM2          --FTM2
  *    chn--PWM输出通道
- *      |__FTM_Ch0          --FTMx通道0(FTM0\FTM1\FTM2)
- *      |__FTM_Ch1          --FTMx通道1(FTM0\FTM1\FTM2)
- *      |__FTM_Ch2          --FTMx通道2(FTM0)
- *      |__FTM_Ch3          --FTMx通道3(FTM0)
- *      |__FTM_Ch4          --FTMx通道4(FTM0)
- *      |__FTM_Ch5          --FTMx通道5(FTM0)
- *      |__FTM_Ch6          --FTMx通道6(FTM0)
- *      |__FTM_Ch7          --FTMx通道7(FTM0)
+ *      |__FTM_Ch0          --FTMx通道0(FTM0\FTM1\FTM2\FTM3)
+ *      |__FTM_Ch1          --FTMx通道1(FTM0\FTM1\FTM2\FTM3)
+ *      |__FTM_Ch2          --FTMx通道2(FTM0\FTM3)
+ *      |__FTM_Ch3          --FTMx通道3(FTM0\FTM3)
+ *      |__FTM_Ch4          --FTMx通道4(FTM0\FTM3)
+ *      |__FTM_Ch5          --FTMx通道5(FTM0\FTM3)
+ *      |__FTM_Ch6          --FTMx通道6(FTM0\FTM3)
+ *      |__FTM_Ch7          --FTMx通道7(FTM0\FTM3)
  *    duty--PWM输出占空比
  *      |__0~10000--占空比0.00%~100.00%
  *
@@ -565,6 +574,8 @@ uint8 LPLD_FTM_EnableIrq(FTM_InitTypeDef ftm_init_structure)
     i=1;
   else if(ftmx == FTM2)
     i=2;
+  else if (ftmx == FTM3)
+    i = 3;
   else
     return 0;
 
@@ -597,6 +608,8 @@ uint8 LPLD_FTM_DisableIrq(FTM_InitTypeDef ftm_init_structure)
     i=1;
   else if(ftmx == FTM2)
     i=2;
+  else if (ftmx == FTM3)
+      i = 3;
   else
     return 0;
 
@@ -795,6 +808,8 @@ static uint8 LPLD_FTM_IC_Init(FTM_InitTypeDef ftm_init_structure)
       i=1;
     else if(ftmx == FTM2)
       i=2;
+    else if (ftmx == FTM3)
+        i = 3;
     else
       return 0;
     FTM_ISR[i] = isr_func;
@@ -969,6 +984,78 @@ static uint8 LPLD_FTM_PinInit(FTM_MemMapPtr  ftmx, FtmChnEnum_Type chn, PortPins
       return 0;   
     }
   }
+  else if (ftmx == FTM3)
+  {
+      switch(chn)
+      {
+          case FTM_Ch0:
+              if (pin == PTE5)
+                  PORTE->PCR[5] = (PORTE->PCR[5] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD0)
+                  PORTD->PCR[0] = (PORTD->PCR[0] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else
+                  return 0;
+              break;
+          case FTM_Ch1:
+              if (pin == PTE6)
+                  PORTE->PCR[6] = (PORTE->PCR[6] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD1)
+                  PORTD->PCR[1] = (PORTD->PCR[1] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else 
+                  return 0;
+              break;
+          case FTM_Ch2:
+              if (pin == PTE7)
+                  PORTE->PCR[7] = (PORTE->PCR[7] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD2)
+                  PORTD->PCR[2] = (PORTD->PCR[2] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else 
+                  return 0;
+              break;
+          case FTM_Ch3:
+              if (pin == PTE8)
+                  PORTE->PCR[8] = (PORTE->PCR[8] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD3)
+                  PORTD->PCR[3] = (PORTD->PCR[3] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else 
+                  return 0;
+              break;
+          case FTM_Ch4:
+              if (pin == PTE9)
+                  PORTE->PCR[9] = (PORTE->PCR[9] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD4)
+                  PORTD->PCR[4] = (PORTD->PCR[4] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else
+                  return 0;
+              break;
+          case FTM_Ch5:
+              if (pin == PTE10)
+                  PORTE->PCR[10] = (PORTE->PCR[10] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD5)
+                  PORTD->PCR[5] = (PORTD->PCR[5] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else
+                  return 0;
+              break;
+          case FTM_Ch6:
+              if (pin == PTE11)
+                  PORTE->PCR[11] = (PORTE->PCR[11] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD6)
+                  PORTD->PCR[6] = (PORTD->PCR[6] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else
+                  return 0;
+              break;
+          case FTM_Ch7:
+              if (pin == PTE12)
+                  PORTE->PCR[12] = (PORTE->PCR[12] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(6);
+              else if (pin == PTD7)
+                  PORTD->PCR[7] = (PORTD->PCR[7] &~ PORT_PCR_MUX_MASK) | PORT_PCR_MUX(4);
+              else
+                 return 0;
+              break;
+          default:
+              return 0;
+      }
+  }
   else
   {
     return 0;
@@ -1111,8 +1198,14 @@ static uint8 LPLD_FTM_PinDeinit(FTM_MemMapPtr ftmx, FtmChnEnum_Type chn)
       return 0;   
     }
   }
-  else
+  else if (ftmx == FTM3)
   {
+      /*
+      switch (chn)
+      {
+        case FTM_Ch0:
+            if 
+      }*/
     return 0;
   }
   return 1;

@@ -142,10 +142,10 @@ void disable_irq (int irq)
  void systemTerm (void)
  {
      UART_InitTypeDef uart_init_struct;
-     uart_init_struct.UART_Uartx = UART0;
+     uart_init_struct.UART_Uartx = UART4;
      uart_init_struct.UART_BaudRate = 9600;
-     uart_init_struct.UART_RxPin = PTB16;
-     uart_init_struct.UART_TxPin = PTB17;
+     uart_init_struct.UART_RxPin = PTC14;
+     uart_init_struct.UART_TxPin = PTC15;
 
      LPLD_UART_Init (uart_init_struct);
 

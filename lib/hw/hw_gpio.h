@@ -105,5 +105,6 @@ void MOS_GPIO_Output (GPIO_MemMapPtr, uint32);
 void MOS_GPIO_Toggle (GPIO_MemMapPtr, uint32);
 //取得GPIO端口0～31位的数据
 uint32 MOS_GPIO_Input (GPIO_MemMapPtr);
-
+//端口输出控制
+//void MOS_GPIO_Output_b (GPIO_MemMapPtr, uint8,)
 #endif
