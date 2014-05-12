@@ -94,17 +94,22 @@ typedef struct
 
 //声明函数
 //GPIO通用初始化函数
-int8 MOS_GPIO_Init (GPIO_InitTypeDef);
+int8 LPLD_GPIO_Init (GPIO_InitTypeDef);
 //使能GPIO外部中断
-uint8 MOS_GPIO_EnableIrq (GPIO_InitTypeDef);
+uint8 LPLD_GPIO_EnableIrq (GPIO_InitTypeDef);
 //禁用GPIO口外部中断
-uint8 MOS_GPIO_DisableIrq (GPIO_InitTypeDef);
+uint8 LPLD_GPIO_DisableIrq (GPIO_InitTypeDef);
 //设置GPIO端口0~31的输出
-void MOS_GPIO_Output (GPIO_MemMapPtr, uint32);
+void LPLD_GPIO_Output (GPIO_MemMapPtr, uint32);
 //设置GPIO端口0~31的电平翻转
-void MOS_GPIO_Toggle (GPIO_MemMapPtr, uint32);
+void LPLD_GPIO_Toggle (GPIO_MemMapPtr, uint32);
+//设置GPIO端口一位的电平翻转
+void LPLD_GPIO_Toggle_b (GPIO_MemMapPtr, uint8);
 //取得GPIO端口0～31位的数据
-uint32 MOS_GPIO_Input (GPIO_MemMapPtr);
+uint32 LPLD_GPIO_Input (GPIO_MemMapPtr);
+//取得GPIO端口一位的数据
+uint8 LPLD_GPIO_Input_b (GPIO_MemMapPtr, uint8);
 //端口输出控制
-//void MOS_GPIO_Output_b (GPIO_MemMapPtr, uint8,)
+void LPLD_GPIO_Output_b (GPIO_MemMapPtr, uint8, uint8);
+
 #endif

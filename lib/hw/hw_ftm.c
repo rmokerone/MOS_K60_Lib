@@ -67,8 +67,8 @@ uint8 LPLD_FTM_Init(FTM_InitTypeDef ftm_init_structure)
   }
   else if (ftm_init_structure.FTM_Ftmx == FTM3)
   {
-      i = 3;
-      SIM_SCGC3 |= SIM_SCGC3_FTM3_MASK;
+    i = 3;
+    SIM_SCGC3 |= SIM_SCGC3_FTM3_MASK;
   }
   else
   {

@@ -38,7 +38,7 @@ void LPLD_UART_Init(UART_InitTypeDef uart_init_structure)
   UART_ISR_CALLBACK rx_isr = uart_init_structure.UART_RxIsr;
   UART_ISR_CALLBACK tx_isr = uart_init_structure.UART_TxIsr;
   
-  if(baud == NULL)
+  if(baud == 0)
   {
     baud = 9600;
   }

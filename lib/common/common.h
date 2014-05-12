@@ -20,6 +20,8 @@
 
 //引用标准函数库
 #include "io.h"
+//引用数据接收处理函数
+#include "console.h"
 
 //定义常用的数据类型
 typedef unsigned char	uint8;  /*  8 bits */

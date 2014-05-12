@@ -13,10 +13,10 @@ GPIO_ISR_CALLBACK GPIO_ISR[5];
 /*
  * \brief GPIO通用初始化函数
  * \param gpio_init_structure
- * \return 0--配置失败
+* \return 0--配置失败
  *         1--配置成功
  */
-int8 MOS_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
+int8 LPLD_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
 {
     uint8 i;
 
@@ -81,7 +81,7 @@ int8 MOS_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
  *    1--配置成功
  *
  */
-uint8 MOS_GPIO_EnableIrq(GPIO_InitTypeDef gpio_init_structure)
+uint8 LPLD_GPIO_EnableIrq(GPIO_InitTypeDef gpio_init_structure)
 {
     GPIO_MemMapPtr ptx = gpio_init_structure.GPIO_PTx;
     GPIO_ISR_CALLBACK isr_func = gpio_init_structure.GPIO_Isr;
@@ -131,7 +131,7 @@ uint8 MOS_GPIO_EnableIrq(GPIO_InitTypeDef gpio_init_structure)
  *    1--配置成功
  *
  */
-uint8 MOS_GPIO_DisableIrq(GPIO_InitTypeDef gpio_init_structure)
+uint8 LPLD_GPIO_DisableIrq(GPIO_InitTypeDef gpio_init_structure)
 {
     uint8 i;
     GPIO_MemMapPtr ptx = gpio_init_structure.GPIO_PTx;
@@ -167,9 +167,14 @@ uint8 MOS_GPIO_DisableIrq(GPIO_InitTypeDef gpio_init_structure)
  *        data32 --
  * /return 无
  */
-void MOS_GPIO_Output(GPIO_MemMapPtr ptx, uint32 data32)
+void LPLD_GPIO_Output(GPIO_MemMapPtr ptx, uint32 data32)
 {
     ptx->PDOR |= data32;
+}
+
+void LPLD_GPIO_Output_b (GPIO_MemMapPtr ptx, uint8 lsb_num, uint8 data1)
+{
+    ptx->PDOR = (ptx -> PDOR & ~(0x01L << lsb_num)) | (uint32) data1 << lsb_num;
 }
 
 /*
@@ -178,9 +183,14 @@ void MOS_GPIO_Output(GPIO_MemMapPtr ptx, uint32 data32)
  *        data32 --
  * /return 无
  */
-void MOS_GPIO_Toggle(GPIO_MemMapPtr ptx, uint32 data32)
+void LPLD_GPIO_Toggle(GPIO_MemMapPtr ptx, uint32 data32)
 {
     ptx->PTOR = data32;
+}
+
+void LPLD_GPIO_Toggle_b(GPIO_MemMapPtr ptx, uint8 lsb_num)
+{
+    ptx -> PTOR = 0x01L << lsb_num;
 }
 
 /*
@@ -188,11 +198,16 @@ void MOS_GPIO_Toggle(GPIO_MemMapPtr ptx, uint32 data32)
  * /param ptx --
  * /return 取得的32为数据
  */
-uint32 MOS_GPIO_Input(GPIO_MemMapPtr ptx)
+uint32 LPLD_GPIO_Input(GPIO_MemMapPtr ptx)
 {
     uint32 tmp;
     tmp = ptx->PDIR;
     return (tmp);
+}
+
+uint8 LPLD_GPIO_Input_b (GPIO_MemMapPtr ptx, uint8 lsb_num)
+{
+    return (uint8) ((ptx -> PDIR >> lsb_num) & 0x01L);
 }
 
 /*
