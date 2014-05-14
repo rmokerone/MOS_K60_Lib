@@ -68,6 +68,7 @@ typedef enum PortPinsEnum
   /********* MK60DZ10无PTE29~31 ************/
 } PortPinsEnum_Type;
 
+//include base hardware drivers
 #include "hw_gpio.h"
 #include "hw_mcg.h"
 #include "hw_uart.h"
@@ -75,5 +76,6 @@ typedef enum PortPinsEnum
 #include "hw_ftm.h"
 #include "hw_pit.h"
 #include "hw_lptmr.h"
+#include "hw_spi.h"
 
 #endif

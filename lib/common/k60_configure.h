@@ -59,7 +59,7 @@
  * 定义printf函数要使用的输出端口 
  */
 #define TERM_PORT          UART4
-#define TERM_BAUD          115200
+#define TERM_BAUD          9600
 #define TERM_TX            PTC15
 #define TERM_RX            PTC14
 #define TERM_RX_IRQ        FALSE
