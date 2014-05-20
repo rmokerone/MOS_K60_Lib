@@ -77,5 +77,6 @@ typedef enum PortPinsEnum
 #include "hw_pit.h"
 #include "hw_lptmr.h"
 #include "hw_spi.h"
+#include "hw_dma.h"
 
 #endif
