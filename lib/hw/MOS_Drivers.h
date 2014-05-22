@@ -81,5 +81,6 @@ typedef enum PortPinsEnum
 
 //add OV7725 driver 
 #include "dev_sccb.h"
+//#include "dev_ov7725.h"
 
 #endif

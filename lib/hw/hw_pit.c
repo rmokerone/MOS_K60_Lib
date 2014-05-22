@@ -133,6 +133,58 @@ void LPLD_PIT_DisableIrq(PIT_InitTypeDef pit_init_structure)
   disable_irq(68 + pitx);
 }
 
+//pit开始记时
+void LPLD_PIT_TimeStart(PITx PIT_pitx)
+{
+    //开启PIT模块
+    SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+    //使能PIT定时器时钟，调试模式下继续使用
+    PIT_MCR &= ~(PIT_MCR_MDIS_MASK | PIT_MCR_FRZ_MASK);
+    //禁用PIT， 以便设置加载值生效
+    PIT_TCTRL (PIT_pitx) &= ~(PIT_TCTRL_TEN_MASK);
+    //设置溢出中断时间
+    PIT_LDVAL (PIT_pitx) = ~0;
+    //清中断标志位
+    //PIT_Flag_Clear (PIT_pitx);
+    PIT_TFLG (PIT_pitx) |= PIT_TFLG_TIF_MASK;
+    //禁止PITn定时器 (用来清空计数值)
+    PIT_TCTRL (PIT_pitx) &= ~PIT_TCTRL_TEN_MASK;
+    //使能PIT定时器
+    PIT_TCTRL (PIT_pitx) = (0
+                           |PIT_TCTRL_TEN_MASK
+                           );
+
+}
+//获取PIT计时时间，（超时关闭定时器）
+uint32 LPLD_PIT_TimeGetUs (PITx PIT_pitx)
+{
+    uint32 val;
+    val = (~0) - PIT_CVAL(PIT_pitx);
+
+    if (PIT_TFLG(PIT_pitx) & PIT_TFLG_TIF_MASK)
+    {
+        //更换下一句的表达方式
+        //PIT_Flag_Clear(PIT_pitx);
+        PIT_TFLG (PIT_pitx) |= PIT_TFLG_TIF_MASK;
+
+        PIT_TCTRL(PIT_pitx) &= ~PIT_TCTRL_TEN_MASK;
+        return ~0;
+    }
+    if (val == (~0))
+    {
+        val --;
+    }
+    return (val/(g_bus_clock/1000000));
+}
+
+//关闭PIT计时
+void LPLD_PIT_TimeClose(PITx PIT_pitx)
+{
+    PIT_TFLG (PIT_pitx) |= PIT_TFLG_TIF_MASK;
+
+    //PIT_Flag_Clear(PIT_pitx);
+    PIT_TCTRL(PIT_pitx) &= ~PIT_TCTRL_TEN_MASK;
+}
 
 /*
  * PIT0--PIT3中断处理函数

@@ -63,6 +63,6 @@
 #define TERM_TX            PTC15
 #define TERM_RX            PTC14
 #define TERM_RX_IRQ        FALSE
-#define TERM_RX_FUN        recv_console
+#define TERM_RX_FUN        NULL
 
 #endif

@@ -84,4 +84,11 @@ void LPLD_PIT_EnableIrq(PIT_InitTypeDef);
 //禁用PITx中断
 void LPLD_PIT_DisableIrq(PIT_InitTypeDef);
 
+//pit开始记时
+void LPLD_PIT_TimeStart (PITx PIT_pitx);
+//获取PIT计时时间，（超时关闭定时器）
+uint32 LPLD_PIT_TimeGetUs (PITx PIT_pitx);
+//关闭PIT计时
+void LPLD_PIT_TimeClose(PITx PIT_pitx);
+
 #endif
