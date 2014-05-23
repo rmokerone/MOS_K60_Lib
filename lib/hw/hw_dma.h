@@ -24,7 +24,9 @@
 
 #define DMA0 DMA_BASE_PTR
 
+//只有一个是默认管理的，没有用到DMAMUX1复用
 #define DMAMUX  DMAMUX0_BASE_PTR
+
 #define DMAMUX0 DMAMUX0_BASE_PTR
 #define DMAMUX1 DMAMUX1_BASE_PTR
 

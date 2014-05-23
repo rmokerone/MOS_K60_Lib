@@ -20,7 +20,7 @@ extern unsigned long _ebss;
 #if defined (__cplusplus)
 extern "C" {
 #endif
-
+#include "common.h"
 //主函数
 extern int main(void);
 //系统初始化函数
@@ -406,6 +406,12 @@ void (* const g_pfnVectors[])(void) = {
  */
 void Default_Handler(void)
 {
+#define VECTORNUM       (*(volatile char *) (0xE000ED04))
+  //while (1);
+  char vtr = VECTORNUM;
+  printf ("\n ******************\n");
+  printf ("Default Handler Error\n");
+  printf ("On vector %d **** Interrupt\n", vtr);
   while (1);
 }
 
