@@ -1,0 +1,717 @@
+Archive member included because of file (symbol)
+
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+                              out/hw_pdb.o (__aeabi_ui2f)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+                              out/hw_pdb.o (__aeabi_fmul)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixunssfsi.o)
+                              out/hw_pdb.o (__aeabi_f2uiz)
+/home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+                              out/printf.o (strlen)
+
+Allocating common symbols
+Common symbol       size              file
+
+OV_PTD_init         0x14              out/dev_ov7725.o
+ADC_ISR             0x8               out/hw_adc.o
+GPIO_ISR            0x14              out/hw_gpio.o
+DMA_ISR             0x40              out/hw_dma.o
+SPI2_ISR            0x18              out/hw_spi.o
+PIT_ISR             0x10              out/hw_pit.o
+UART_T_ISR          0x18              out/hw_uart.o
+LPTMR_ISR           0x4               out/hw_lptmr.o
+img                 0x258             out/main.o
+FTM_ISR             0xc               out/hw_ftm.o
+OV_PTA_init         0x14              out/dev_ov7725.o
+UART_R_ISR          0x18              out/hw_uart.o
+SPI0_ISR            0x18              out/hw_spi.o
+PDB_SE_ISR          0x4               out/hw_pdb.o
+OV_PTB_init         0x14              out/dev_ov7725.o
+PDB_ISR             0x4               out/hw_pdb.o
+SPI1_ISR            0x18              out/hw_spi.o
+OV_dma_init         0x2c              out/dev_ov7725.o
+Pix_Data            0x12c0            out/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+VECTORS          0x00000000         0x00000410         xr
+FLASH            0x00000800         0x0007f800         xr
+SRAM_U           0x1fff0000         0x00010000         xrw
+SRAM_L           0x20000000         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD out/main.o
+LOAD out/startup_k60.o
+LOAD out/system_k60.o
+LOAD out/dev_ov7725.o
+LOAD out/dev_sccb.o
+LOAD out/hw_adc.o
+LOAD out/hw_dma.o
+LOAD out/hw_ftm.o
+LOAD out/hw_gpio.o
+LOAD out/hw_lptmr.o
+LOAD out/hw_mcg.o
+LOAD out/hw_pdb.o
+LOAD out/hw_pit.o
+LOAD out/hw_spi.o
+LOAD out/hw_uart.o
+LOAD out/io.o
+LOAD out/printf.o
+START GROUP
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a
+LOAD /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libc.a
+END GROUP
+
+.vectortable    0x00000000      0x410
+                0x00000000                __vector_table = .
+                0x00000000                . = ALIGN (0x4)
+ *(.vectors)
+ .vectors       0x00000000      0x410 out/startup_k60.o
+                0x00000000                g_pfnVectors
+                0x00000410                . = ALIGN (0x4)
+
+.text           0x00000800     0x84a8
+                0x00000800                . = ALIGN (0x4)
+ *(.text)
+ .text          0x00000800       0xd8 out/main.o
+                0x00000800                main
+ .text          0x000008d8       0xe0 out/startup_k60.o
+                0x000008d8                CAN0_Rx_Warning_IRQHandler
+                0x000008d8                I2C0_IRQHandler
+                0x000008d8                CAN1_ORed_Message_buffer_IRQHandler
+                0x000008d8                I2C1_IRQHandler
+                0x000008d8                ENET_Error_IRQHandler
+                0x000008d8                CAN0_Tx_Warning_IRQHandler
+                0x000008d8                CAN0_ORed_Message_buffer_IRQHandler
+                0x000008d8                Watchdog_IRQHandler
+                0x000008d8                CMP2_IRQHandler
+                0x000008d8                I2S0_IRQHandler
+                0x000008d8                TSI0_IRQHandler
+                0x000008d8                ENET_Receive_IRQHandler
+                0x000008d8                ENET_1588_Timer_IRQHandler
+                0x000008d8                CAN1_Error_IRQHandler
+                0x000008d8                CMT_IRQHandler
+                0x000008d8                CMP1_IRQHandler
+                0x000008d8                UART4_ERR_IRQHandler
+                0x000008d8                LPTimer_IRQHandler
+                0x000008d8                RTC_IRQHandler
+                0x000008d8                CAN1_Bus_Off_IRQHandler
+                0x000008d8                UART3_ERR_IRQHandler
+                0x000008d8                SDHC_IRQHandler
+                0x000008d8                MCG_IRQHandler
+                0x000008d8                UART2_ERR_IRQHandler
+                0x000008d8                UART5_ERR_IRQHandler
+                0x000008d8                Read_Collision_IRQHandler
+                0x000008d8                Default_Handler
+                0x000008d8                ENET_Transmit_IRQHandler
+                0x000008d8                USB_IRQHandler
+                0x000008d8                CAN1_Tx_Warning_IRQHandler
+                0x000008d8                USB0_IRQHandler
+                0x000008d8                LLW_IRQHandler
+                0x000008d8                CAN1_Rx_Warning_IRQHandler
+                0x000008d8                CAN1_Wake_Up_IRQHandler
+                0x000008d8                RNG_IRQHandler
+                0x000008d8                DAC0_IRQHandler
+                0x000008d8                Software_IRQHandler
+                0x000008d8                CAN0_Error_IRQHandler
+                0x000008d8                UART0_ERR_IRQHandler
+                0x000008d8                DMA_Error_IRQHandler
+                0x000008d8                LVD_LVW_IRQHandler
+                0x000008d8                DAC1_IRQHandler
+                0x000008d8                MCM_IRQHandler
+                0x000008d8                FTFL_IRQHandler
+                0x000008d8                CAN0_Bus_Off_IRQHandler
+                0x000008d8                CAN0_Wake_Up_IRQHandler
+                0x000008d8                UART1_ERR_IRQHandler
+                0x000008d8                CMP0_IRQHandler
+                0x00000914                Reset_Handler
+ .text          0x000009b8      0x418 out/system_k60.o
+                0x000009b8                SystemInit
+                0x00000aac                SystemCoreClockUpdate
+                0x00000b10                enable_irq
+                0x00000c98                disable_irq
+                0x00000d8c                systemTerm
+ .text          0x00000dd0      0xc78 out/dev_ov7725.o
+                0x00000dd0                Ov7725_Init
+                0x00000fd0                Ov7725_Delay
+                0x00001014                Ov7725_eagle_dma
+                0x000010bc                Ov7725_eagle_vsync
+                0x00001134                Ov7725_eagle_get_img
+                0x00001188                Ov7725_img_extract
+                0x000012e0                Ov7725_sendimg
+                0x0000132c                Ov7725_Gpio_Init
+                0x0000143c                Ov7725_Dma_Init
+                0x0000154c                Ov7725_isr
+                0x000015d8                dma_portx2buff_init
+                0x0000185c                get_midline
+ .text          0x00001a48      0x56c out/dev_sccb.o
+                0x00001a48                LPLD_SCCB_Init
+                0x00001a88                LPLD_SCCB_WriteReg
+                0x00001af0                LPLD_SCCB_ReadReg
+                0x00001bac                LPLD_SCCB_Start
+ .text          0x00001fb4      0x8ec out/hw_adc.o
+                0x00001fb4                LPLD_ADC_Init
+                0x00002180                LPLD_ADC_Deinit
+                0x00002230                LPLD_ADC_Get
+                0x00002284                LPLD_ADC_EnableConversion
+                0x000022e4                LPLD_ADC_GetResult
+                0x0000230c                LPLD_ADC_GetSC1nCOCO
+                0x00002348                LPLD_ADC_EnableIrq
+                0x000023a8                LPLD_ADC_DisableIrq
+                0x00002408                LPLD_ADC_Chn_Enable
+                0x00002878                ADC0_IRQHandler
+                0x0000288c                ADC1_IRQHandler
+ .text          0x000028a0      0x820 out/hw_dma.o
+                0x000028a0                LPLD_DMA_Init
+                0x00002d5c                LPLD_DMA_EnableIrq
+                0x00002d84                LPLD_DMA_DisableIrq
+                0x00002dac                LPLD_DMA_SoftwareStartService
+                0x00002e00                DMA0_IRQHandler
+                0x00002e2c                DMA1_IRQHandler
+                0x00002e58                DMA2_IRQHandler
+                0x00002e84                DMA3_IRQHandler
+                0x00002eb0                DMA4_IRQHandler
+                0x00002edc                DMA5_IRQHandler
+                0x00002f08                DMA6_IRQHandler
+                0x00002f34                DMA7_IRQHandler
+                0x00002f60                DMA8_IRQHandler
+                0x00002f8c                DMA9_IRQHandler
+                0x00002fb8                DMA10_IRQHandler
+                0x00002fe4                DMA11_IRQHandler
+                0x00003010                DMA12_IRQHandler
+                0x0000303c                DMA13_IRQHandler
+                0x00003068                DMA14_IRQHandler
+                0x00003094                DMA15_IRQHandler
+ .text          0x000030c0     0x1bd0 out/hw_ftm.o
+                0x000030c0                LPLD_FTM_Init
+                0x000032b0                LPLD_FTM_Deinit
+                0x000033cc                LPLD_FTM_PWM_Enable
+                0x00003474                LPLD_FTM_PWM_ChangeDuty
+                0x000034fc                LPLD_FTM_DisableChn
+                0x00003548                LPLD_FTM_IC_Enable
+                0x0000366c                LPLD_FTM_IsTOF
+                0x00003690                LPLD_FTM_ClearTOF
+                0x000036b0                LPLD_FTM_IsCHnF
+                0x000036e4                LPLD_FTM_ClearCHnF
+                0x00003720                LPLD_FTM_GetChVal
+                0x0000374c                LPLD_FTM_GetClkDiv
+                0x00003774                LPLD_FTM_GetCounter
+                0x00003790                LPLD_FTM_ClearCounter
+                0x000037ac                LPLD_FTM_EnableIrq
+                0x00003840                LPLD_FTM_DisableIrq
+                0x000038d4                LPLD_FTM_QD_Enable
+                0x00003928                LPLD_FTM_QD_Disable
+                0x00004c54                FTM0_IRQHandler
+                0x00004c68                FTM1_IRQHandler
+                0x00004c7c                FTM2_IRQHandler
+ .text          0x00004c90      0x4f8 out/hw_gpio.o
+                0x00004c90                LPLD_GPIO_Init
+                0x00004de8                LPLD_GPIO_EnableIrq
+                0x00004edc                LPLD_GPIO_DisableIrq
+                0x00004fe4                LPLD_GPIO_Output
+                0x00005004                LPLD_GPIO_Output_b
+                0x00005040                LPLD_GPIO_Toggle
+                0x00005060                LPLD_GPIO_Toggle_b
+                0x0000508c                LPLD_GPIO_Input
+                0x000050a8                LPLD_GPIO_Input_b
+                0x000050d4                PORTA_IRQHandler
+                0x000050f8                PORTB_IRQHandler
+                0x0000511c                PORTC_IRQHandler
+                0x00005140                PORTD_IRQHandler
+                0x00005164                PORTE_IRQHandler
+ .text          0x00005188      0x368 out/hw_lptmr.o
+                0x00005188                LPLD_LPTMR_Init
+                0x00005328                LPLD_LPTMR_Deinit
+                0x00005390                LPLD_LPTMR_ResetCounter
+                0x000053b4                LPLD_LPTMR_EnableIrq
+                0x000053c8                LPLD_LPTMR_DisableIrq
+                0x000053dc                LPLD_LPTMR_GetPulseAcc
+                0x00005404                LPLD_LPTMR_DelayMs
+                0x000054c4                LPT_IRQHandler
+ .text          0x000054f0      0x364 out/hw_mcg.o
+                0x000054f0                LPLD_PLL_Setup
+                0x000057b4                LPLD_Set_SYS_DIV
+ .text          0x00005854      0x728 out/hw_pdb.o
+                0x00005854                LPLD_PDB_Init
+                0x00005bac                LPLD_PDB_Deinit
+                0x00005c2c                LPLD_PDB_AdcTriggerCfg
+                0x00005d8c                LPLD_PDB_DacTriggerCfg
+                0x00005e9c                PDB0_IRQHandler
+ .text          0x00005f7c      0x54c out/hw_pit.o
+                0x00005f7c                LPLD_PIT_Init
+                0x000060ec                LPLD_PIT_Deinit
+                0x00006134                LPLD_PIT_EnableIrq
+                0x00006164                LPLD_PIT_DisableIrq
+                0x00006194                LPLD_PIT_TimeStart
+                0x000062ac                LPLD_PIT_TimeGetUs
+                0x00006394                LPLD_PIT_TimeClose
+                0x00006408                PIT0_IRQHandler
+                0x00006438                PIT1_IRQHandler
+                0x00006468                PIT2_IRQHandler
+                0x00006498                PIT3_IRQHandler
+ .text          0x000064c8      0xe74 out/hw_spi.o
+                0x000064c8                LPLD_SPI_Init
+                0x00006c74                LPLD_SPI_Deinit
+                0x00006d70                LPLD_SPI_EnableIrq
+                0x00006de8                LPLD_SPI_DisableIrq
+                0x00006e60                LPLD_SPI_Master_WriteRead
+                0x00006ecc                LPLD_SPI_Master_Read
+                0x00006f04                LPLD_SPI_Master_Write
+                0x00006f4c                SPI0_IRQHandler
+                0x0000709c                SPI1_IRQHandler
+                0x000071ec                SPI2_IRQHandler
+ .text          0x0000733c      0x990 out/hw_uart.o
+                0x0000733c                LPLD_UART_Init
+                0x00007818                LPLD_UART_GetChar
+                0x00007848                LPLD_UART_GetChar_Present
+                0x00007868                LPLD_UART_PutChar
+                0x00007894                LPLD_UART_PutCharArr
+                0x000078dc                LPLD_UART_EnableIrq
+                0x00007984                LPLD_UART_DisableIrq
+                0x00007a2c                UART0_RX_TX_IRQHandler
+                0x00007a9c                UART1_RX_TX_IRQHandler
+                0x00007b0c                UART2_RX_TX_IRQHandler
+                0x00007b7c                UART3_RX_TX_IRQHandler
+                0x00007bec                UART4_RX_TX_IRQHandler
+                0x00007c5c                UART5_RX_TX_IRQHandler
+ .text          0x00007ccc       0x54 out/io.o
+                0x00007ccc                in_char
+                0x00007ce4                out_char
+                0x00007d08                char_present
+ .text          0x00007d20      0x954 out/printf.o
+                0x00007f08                printk
+                0x000085e4                printf
+                0x00008624                sprintf
+ .text          0x00008674      0x21c /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+                0x00008674                __aeabi_frsub
+                0x0000867c                __subsf3
+                0x0000867c                __aeabi_fsub
+                0x00008680                __aeabi_fadd
+                0x00008680                __addsf3
+                0x000087e0                __aeabi_ui2f
+                0x000087e0                __floatunsisf
+                0x000087e8                __aeabi_i2f
+                0x000087e8                __floatsisf
+                0x00008804                __floatundisf
+                0x00008804                __aeabi_ul2f
+                0x00008814                __floatdisf
+                0x00008814                __aeabi_l2f
+ .text          0x00008890      0x2a0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+                0x00008890                __mulsf3
+                0x00008890                __aeabi_fmul
+                0x000089f8                __divsf3
+                0x000089f8                __aeabi_fdiv
+ .text          0x00008b30       0x40 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixunssfsi.o)
+                0x00008b30                __aeabi_f2uiz
+                0x00008b30                __fixunssfsi
+ .text          0x00008b70        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.text*)
+ .text.strlen   0x00008b70       0x60 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+                0x00008b70                strlen
+ *(.rodata)
+ .rodata        0x00008bd0       0x50 out/startup_k60.o
+ .rodata        0x00008c20       0x84 out/dev_ov7725.o
+ .rodata        0x00008ca4        0x4 out/hw_pdb.o
+                0x00008ca4                pdb_sc_mults
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x00008ca8                . = ALIGN (0x4)
+                0x00008ca8                _etext = .
+
+.vfp11_veneer   0x00008ca8        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00008ca8        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x00008ca8        0x0
+ .iplt          0x00000000        0x0 out/main.o
+
+.rel.dyn        0x00008ca8        0x0
+ .rel.iplt      0x00000000        0x0 out/main.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00008ca8                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00008ca8                __exidx_end = .
+
+.preinit_array  0x00008ca8        0x0
+                0x00008ca8                PROVIDE (__preinit_array_start, .)
+ *(.preinit_array*)
+                0x00008ca8                PROVIDE (__preinit_array_end, .)
+
+.init_array     0x00008ca8        0x0
+                0x00008ca8                PROVIDE (__init_array_start, .)
+ *(SORT(.init_array.*))
+ *(.init_array*)
+                0x00008ca8                PROVIDE (__init_array_end, .)
+
+.fini_array     0x00008ca8        0x0
+                0x00008ca8                PROVIDE (__fini_array_start, .)
+ *(SORT(.fini_array.*))
+ *(.fini_array*)
+                0x00008ca8                PROVIDE (__fini_array_end, .)
+                0x00008ca8                __etext = .
+
+.data           0x1fff0000       0x78 load address 0x00008ca8
+                0x1fff0000                . = ALIGN (0x4)
+                0x1fff0000                _sdata = .
+ *(.data)
+ .data          0x1fff0000        0x0 out/main.o
+ .data          0x1fff0000        0x0 out/startup_k60.o
+ .data          0x1fff0000        0x4 out/system_k60.o
+                0x1fff0000                SystemCoreClock
+ .data          0x1fff0004       0x64 out/dev_ov7725.o
+                0x1fff0004                ov7725_eagle_reg
+                0x1fff0066                ov7725_eagle_cfgnum
+                0x1fff0067                ov7725_eagle_img_flag
+ .data          0x1fff0068        0x0 out/dev_sccb.o
+ .data          0x1fff0068        0x0 out/hw_adc.o
+ .data          0x1fff0068        0x0 out/hw_dma.o
+ .data          0x1fff0068        0x0 out/hw_ftm.o
+ .data          0x1fff0068        0x0 out/hw_gpio.o
+ .data          0x1fff0068        0x0 out/hw_lptmr.o
+ .data          0x1fff0068       0x10 out/hw_mcg.o
+                0x1fff0068                g_core_clock
+                0x1fff006c                g_bus_clock
+                0x1fff0070                g_flash_clock
+                0x1fff0074                g_flexbus_clock
+ .data          0x1fff0078        0x0 out/hw_pdb.o
+ .data          0x1fff0078        0x0 out/hw_pit.o
+ .data          0x1fff0078        0x0 out/hw_spi.o
+ .data          0x1fff0078        0x0 out/hw_uart.o
+ .data          0x1fff0078        0x0 out/io.o
+ .data          0x1fff0078        0x0 out/printf.o
+ .data          0x1fff0078        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .data          0x1fff0078        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .data          0x1fff0078        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixunssfsi.o)
+ .data          0x1fff0078        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.data*)
+                0x1fff0078                . = ALIGN (0x4)
+                0x1fff0078                _edata = .
+
+.igot.plt       0x1fff0078        0x0 load address 0x00008d20
+ .igot.plt      0x00000000        0x0 out/main.o
+                0x1fff0078                . = ALIGN (0x4)
+
+.bss            0x1fff0078     0x1680 load address 0x00008d20
+                0x1fff0078                _sbss = .
+ *(.bss)
+ .bss           0x1fff0078        0x0 out/main.o
+ .bss           0x1fff0078        0x0 out/startup_k60.o
+ .bss           0x1fff0078        0x0 out/system_k60.o
+ .bss           0x1fff0078        0x1 out/dev_ov7725.o
+                0x1fff0078                ready_send_flag
+ .bss           0x1fff0079        0x0 out/dev_sccb.o
+ .bss           0x1fff0079        0x0 out/hw_adc.o
+ .bss           0x1fff0079        0x0 out/hw_dma.o
+ .bss           0x1fff0079        0x0 out/hw_ftm.o
+ .bss           0x1fff0079        0x0 out/hw_gpio.o
+ .bss           0x1fff0079        0x0 out/hw_lptmr.o
+ .bss           0x1fff0079        0x0 out/hw_mcg.o
+ .bss           0x1fff0079        0x0 out/hw_pdb.o
+ .bss           0x1fff0079        0x0 out/hw_pit.o
+ .bss           0x1fff0079        0x0 out/hw_spi.o
+ .bss           0x1fff0079        0x0 out/hw_uart.o
+ .bss           0x1fff0079        0x0 out/io.o
+ .bss           0x1fff0079        0x0 out/printf.o
+ .bss           0x1fff0079        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .bss           0x1fff0079        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .bss           0x1fff0079        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixunssfsi.o)
+ .bss           0x1fff0079        0x0 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+ *(.bss*)
+ *(COMMON)
+ *fill*         0x1fff0079        0x3 00
+ COMMON         0x1fff007c     0x1518 out/main.o
+                0x1fff007c                img
+                0x1fff02d4                Pix_Data
+ COMMON         0x1fff1594       0x68 out/dev_ov7725.o
+                0x1fff1594                OV_PTD_init
+                0x1fff15a8                OV_PTA_init
+                0x1fff15bc                OV_PTB_init
+                0x1fff15d0                OV_dma_init
+ COMMON         0x1fff15fc        0x8 out/hw_adc.o
+                0x1fff15fc                ADC_ISR
+ COMMON         0x1fff1604       0x40 out/hw_dma.o
+                0x1fff1604                DMA_ISR
+ COMMON         0x1fff1644        0xc out/hw_ftm.o
+                0x1fff1644                FTM_ISR
+ COMMON         0x1fff1650       0x14 out/hw_gpio.o
+                0x1fff1650                GPIO_ISR
+ COMMON         0x1fff1664        0x4 out/hw_lptmr.o
+                0x1fff1664                LPTMR_ISR
+ COMMON         0x1fff1668        0x8 out/hw_pdb.o
+                0x1fff1668                PDB_SE_ISR
+                0x1fff166c                PDB_ISR
+ COMMON         0x1fff1670       0x10 out/hw_pit.o
+                0x1fff1670                PIT_ISR
+ COMMON         0x1fff1680       0x48 out/hw_spi.o
+                0x1fff1680                SPI2_ISR
+                0x1fff1698                SPI0_ISR
+                0x1fff16b0                SPI1_ISR
+ COMMON         0x1fff16c8       0x30 out/hw_uart.o
+                0x1fff16c8                UART_T_ISR
+                0x1fff16e0                UART_R_ISR
+                0x1fff16f8                . = ALIGN (0x4)
+                0x1fff16f8                _ebss = .
+
+.heap           0x1fff16f8        0x0
+                0x1fff16f8                __end__ = .
+                0x1fff16f8                end = __end__
+ *(.heap*)
+                0x1fff16f8                __HeapLimit = .
+
+.stack_dummy    0x1fff16f8        0x0
+ *(.stack*)
+                0x20000000                __StackTop = (ORIGIN (SRAM_U) + 0x10000)
+                0x20000000                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x20000000                PROVIDE (__stack, __StackTop)
+                0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
+
+.ARM.attributes
+                0x00000000       0x33
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x33 out/main.o
+ .ARM.attributes
+                0x00000033       0x33 out/startup_k60.o
+ .ARM.attributes
+                0x00000066       0x33 out/system_k60.o
+ .ARM.attributes
+                0x00000099       0x33 out/dev_ov7725.o
+ .ARM.attributes
+                0x000000cc       0x33 out/dev_sccb.o
+ .ARM.attributes
+                0x000000ff       0x33 out/hw_adc.o
+ .ARM.attributes
+                0x00000132       0x33 out/hw_dma.o
+ .ARM.attributes
+                0x00000165       0x33 out/hw_ftm.o
+ .ARM.attributes
+                0x00000198       0x33 out/hw_gpio.o
+ .ARM.attributes
+                0x000001cb       0x33 out/hw_lptmr.o
+ .ARM.attributes
+                0x000001fe       0x33 out/hw_mcg.o
+ .ARM.attributes
+                0x00000231       0x33 out/hw_pdb.o
+ .ARM.attributes
+                0x00000264       0x33 out/hw_pit.o
+ .ARM.attributes
+                0x00000297       0x33 out/hw_spi.o
+ .ARM.attributes
+                0x000002ca       0x33 out/hw_uart.o
+ .ARM.attributes
+                0x000002fd       0x33 out/io.o
+ .ARM.attributes
+                0x00000330       0x33 out/printf.o
+ .ARM.attributes
+                0x00000363       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_addsubsf3.o)
+ .ARM.attributes
+                0x00000381       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_muldivsf3.o)
+ .ARM.attributes
+                0x0000039f       0x1e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/armv7e-m/libgcc.a(_arm_fixunssfsi.o)
+ .ARM.attributes
+                0x000003bd       0x2e /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
+OUTPUT(out/main.elf elf32-littlearm)
+
+.debug_info     0x00000000     0xb5ac
+ .debug_info    0x00000000      0xa85 out/main.o
+ .debug_info    0x00000a85      0x164 out/startup_k60.o
+ .debug_info    0x00000be9      0xd27 out/system_k60.o
+ .debug_info    0x00001910     0x1731 out/dev_ov7725.o
+ .debug_info    0x00003041      0x49f out/dev_sccb.o
+ .debug_info    0x000034e0      0xd94 out/hw_adc.o
+ .debug_info    0x00004274      0xf43 out/hw_dma.o
+ .debug_info    0x000051b7     0x1085 out/hw_ftm.o
+ .debug_info    0x0000623c      0x5c4 out/hw_gpio.o
+ .debug_info    0x00006800      0x92b out/hw_lptmr.o
+ .debug_info    0x0000712b      0x6d3 out/hw_mcg.o
+ .debug_info    0x000077fe      0xd3d out/hw_pdb.o
+ .debug_info    0x0000853b      0x63f out/hw_pit.o
+ .debug_info    0x00008b7a     0x10d4 out/hw_spi.o
+ .debug_info    0x00009c4e     0x1026 out/hw_uart.o
+ .debug_info    0x0000ac74      0x41d out/io.o
+ .debug_info    0x0000b091      0x51b out/printf.o
+
+.debug_abbrev   0x00000000     0x1caf
+ .debug_abbrev  0x00000000      0x145 out/main.o
+ .debug_abbrev  0x00000145       0xad out/startup_k60.o
+ .debug_abbrev  0x000001f2      0x1a4 out/system_k60.o
+ .debug_abbrev  0x00000396      0x26d out/dev_ov7725.o
+ .debug_abbrev  0x00000603      0x1be out/dev_sccb.o
+ .debug_abbrev  0x000007c1      0x25f out/hw_adc.o
+ .debug_abbrev  0x00000a20      0x1d4 out/hw_dma.o
+ .debug_abbrev  0x00000bf4      0x249 out/hw_ftm.o
+ .debug_abbrev  0x00000e3d      0x15e out/hw_gpio.o
+ .debug_abbrev  0x00000f9b      0x1ad out/hw_lptmr.o
+ .debug_abbrev  0x00001148      0x144 out/hw_mcg.o
+ .debug_abbrev  0x0000128c      0x1fa out/hw_pdb.o
+ .debug_abbrev  0x00001486      0x19b out/hw_pit.o
+ .debug_abbrev  0x00001621      0x1e9 out/hw_spi.o
+ .debug_abbrev  0x0000180a      0x205 out/hw_uart.o
+ .debug_abbrev  0x00001a0f       0xf9 out/io.o
+ .debug_abbrev  0x00001b08      0x1a7 out/printf.o
+
+.debug_loc      0x00000000     0x2256
+ .debug_loc     0x00000000       0x38 out/main.o
+ .debug_loc     0x00000038       0x70 out/startup_k60.o
+ .debug_loc     0x000000a8      0x10c out/system_k60.o
+ .debug_loc     0x000001b4      0x296 out/dev_ov7725.o
+ .debug_loc     0x0000044a      0x22c out/dev_sccb.o
+ .debug_loc     0x00000676      0x2b8 out/hw_adc.o
+ .debug_loc     0x0000092e      0x3ae out/hw_dma.o
+ .debug_loc     0x00000cdc      0x618 out/hw_ftm.o
+ .debug_loc     0x000012f4      0x2f8 out/hw_gpio.o
+ .debug_loc     0x000015ec      0x178 out/hw_lptmr.o
+ .debug_loc     0x00001764       0x70 out/hw_mcg.o
+ .debug_loc     0x000017d4      0x10e out/hw_pdb.o
+ .debug_loc     0x000018e2      0x268 out/hw_pit.o
+ .debug_loc     0x00001b4a      0x23e out/hw_spi.o
+ .debug_loc     0x00001d88      0x29c out/hw_uart.o
+ .debug_loc     0x00002024       0x90 out/io.o
+ .debug_loc     0x000020b4      0x1a2 out/printf.o
+
+.debug_aranges  0x00000000      0x220
+ .debug_aranges
+                0x00000000       0x20 out/main.o
+ .debug_aranges
+                0x00000020       0x20 out/startup_k60.o
+ .debug_aranges
+                0x00000040       0x20 out/system_k60.o
+ .debug_aranges
+                0x00000060       0x20 out/dev_ov7725.o
+ .debug_aranges
+                0x00000080       0x20 out/dev_sccb.o
+ .debug_aranges
+                0x000000a0       0x20 out/hw_adc.o
+ .debug_aranges
+                0x000000c0       0x20 out/hw_dma.o
+ .debug_aranges
+                0x000000e0       0x20 out/hw_ftm.o
+ .debug_aranges
+                0x00000100       0x20 out/hw_gpio.o
+ .debug_aranges
+                0x00000120       0x20 out/hw_lptmr.o
+ .debug_aranges
+                0x00000140       0x20 out/hw_mcg.o
+ .debug_aranges
+                0x00000160       0x20 out/hw_pdb.o
+ .debug_aranges
+                0x00000180       0x20 out/hw_pit.o
+ .debug_aranges
+                0x000001a0       0x20 out/hw_spi.o
+ .debug_aranges
+                0x000001c0       0x20 out/hw_uart.o
+ .debug_aranges
+                0x000001e0       0x20 out/io.o
+ .debug_aranges
+                0x00000200       0x20 out/printf.o
+
+.debug_line     0x00000000     0x20dd
+ .debug_line    0x00000000      0x148 out/main.o
+ .debug_line    0x00000148       0x74 out/startup_k60.o
+ .debug_line    0x000001bc      0x193 out/system_k60.o
+ .debug_line    0x0000034f      0x303 out/dev_ov7725.o
+ .debug_line    0x00000652      0x1d0 out/dev_sccb.o
+ .debug_line    0x00000822      0x210 out/hw_adc.o
+ .debug_line    0x00000a32      0x1f7 out/hw_dma.o
+ .debug_line    0x00000c29      0x3af out/hw_ftm.o
+ .debug_line    0x00000fd8      0x1a5 out/hw_gpio.o
+ .debug_line    0x0000117d      0x185 out/hw_lptmr.o
+ .debug_line    0x00001302      0x18e out/hw_mcg.o
+ .debug_line    0x00001490      0x1d5 out/hw_pdb.o
+ .debug_line    0x00001665      0x188 out/hw_pit.o
+ .debug_line    0x000017ed      0x2b5 out/hw_spi.o
+ .debug_line    0x00001aa2      0x267 out/hw_uart.o
+ .debug_line    0x00001d09       0xf8 out/io.o
+ .debug_line    0x00001e01      0x2dc out/printf.o
+
+.debug_str      0x00000000     0x2fc1
+ .debug_str     0x00000000      0xabf out/main.o
+                                0xb0b (size before relaxing)
+ .debug_str     0x00000abf       0x7b out/startup_k60.o
+                                0x19f (size before relaxing)
+ .debug_str     0x00000b3a      0x5a5 out/system_k60.o
+                                0x729 (size before relaxing)
+ .debug_str     0x000010df      0x546 out/dev_ov7725.o
+                               0x11c5 (size before relaxing)
+ .debug_str     0x00001625       0xe4 out/dev_sccb.o
+                                0x46b (size before relaxing)
+ .debug_str     0x00001709      0x2ef out/hw_adc.o
+                                0xbc4 (size before relaxing)
+ .debug_str     0x000019f8      0x20b out/hw_dma.o
+                                0xe30 (size before relaxing)
+ .debug_str     0x00001c03      0x420 out/hw_ftm.o
+                                0x8f0 (size before relaxing)
+ .debug_str     0x00002023      0x152 out/hw_gpio.o
+                                0x38b (size before relaxing)
+ .debug_str     0x00002175      0x191 out/hw_lptmr.o
+                                0xa60 (size before relaxing)
+ .debug_str     0x00002306      0x107 out/hw_mcg.o
+                                0x3d3 (size before relaxing)
+ .debug_str     0x0000240d      0x242 out/hw_pdb.o
+                                0xb54 (size before relaxing)
+ .debug_str     0x0000264f      0x18c out/hw_pit.o
+                                0x3dd (size before relaxing)
+ .debug_str     0x000027db      0x50f out/hw_spi.o
+                               0x1018 (size before relaxing)
+ .debug_str     0x00002cea      0x189 out/hw_uart.o
+                                0xdff (size before relaxing)
+ .debug_str     0x00002e73       0x34 out/io.o
+                                0x242 (size before relaxing)
+ .debug_str     0x00002ea7      0x11a out/printf.o
+                                0x272 (size before relaxing)
+
+.comment        0x00000000       0x70
+ .comment       0x00000000       0x70 out/main.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 out/startup_k60.o
+ .comment       0x00000000       0x71 out/system_k60.o
+ .comment       0x00000000       0x71 out/dev_ov7725.o
+ .comment       0x00000000       0x71 out/dev_sccb.o
+ .comment       0x00000000       0x71 out/hw_adc.o
+ .comment       0x00000000       0x71 out/hw_dma.o
+ .comment       0x00000000       0x71 out/hw_ftm.o
+ .comment       0x00000000       0x71 out/hw_gpio.o
+ .comment       0x00000000       0x71 out/hw_lptmr.o
+ .comment       0x00000000       0x71 out/hw_mcg.o
+ .comment       0x00000000       0x71 out/hw_pdb.o
+ .comment       0x00000000       0x71 out/hw_pit.o
+ .comment       0x00000000       0x71 out/hw_spi.o
+ .comment       0x00000000       0x71 out/hw_uart.o
+ .comment       0x00000000       0x71 out/io.o
+ .comment       0x00000000       0x71 out/printf.o
+
+.debug_frame    0x00000000     0x1410
+ .debug_frame   0x00000000       0x30 out/main.o
+ .debug_frame   0x00000030       0x50 out/startup_k60.o
+ .debug_frame   0x00000080       0xa0 out/system_k60.o
+ .debug_frame   0x00000120      0x180 out/dev_ov7725.o
+ .debug_frame   0x000002a0      0x158 out/dev_sccb.o
+ .debug_frame   0x000003f8      0x170 out/hw_adc.o
+ .debug_frame   0x00000568      0x24c out/hw_dma.o
+ .debug_frame   0x000007b4      0x33c out/hw_ftm.o
+ .debug_frame   0x00000af0      0x1a4 out/hw_gpio.o
+ .debug_frame   0x00000c94       0xe8 out/hw_lptmr.o
+ .debug_frame   0x00000d7c       0x4c out/hw_mcg.o
+ .debug_frame   0x00000dc8       0xac out/hw_pdb.o
+ .debug_frame   0x00000e74      0x154 out/hw_pit.o
+ .debug_frame   0x00000fc8      0x138 out/hw_spi.o
+ .debug_frame   0x00001100      0x18c out/hw_uart.o
+ .debug_frame   0x0000128c       0x68 out/io.o
+ .debug_frame   0x000012f4       0xfc out/printf.o
+ .debug_frame   0x000013f0       0x20 /home/moker/smart_car/src/gcc-arm-none-eabi-4_7-2013q3/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m/libg.a(lib_a-strlen.o)
