@@ -336,4 +336,15 @@ uint8 LPLD_DMA_DisableIrq(DMA_InitTypeDef);
 //DMA服务请求软件开始
 void LPLD_DMA_SoftwareStartService(DMA_InitTypeDef);
 
+//允许DMA通道传输完成中断 
+#define DMA_IRQ_EN(DMA_CHn) enable_irq(DMA_CHn + INT_DMA0_DMA16 - 16)
+//禁止DMA通道传输完成中断
+#define DMA_IRQ_DIS(DMA_CHn) disable_irq(DMA_CHn + INT_DMA0_DMA16 - 16)
+//清除通道传输中断标志位 
+#define DMA_IRQ_CLEAN(DMA_CHn) DMA_INT |= (DMA_INT_INT0_MASK << DMA_CHn)
+//使能通道硬件DMA请求 
+#define DMA_EN(DMA_CHn)  DMA_ERQ |= (DMA_ERQ_ERQ0_MASK << (DMA_CHn))
+//禁止通道硬件DMA请求
+#define DMA_DIS(DMA_CHn) DMA_INT &= ~(DMA_ERQ_ERQ0_MASK << (DMA_CHn))
+
 #endif /* __HW_DMA_H__ */

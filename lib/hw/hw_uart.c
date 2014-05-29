@@ -376,7 +376,7 @@ void LPLD_UART_DisableIrq(UART_InitTypeDef uart_init_structure)
 
 //HW层中断函数，用户无需调用
 //UART0
-void UART0_IRQHandler(void)
+void UART0_RX_TX_IRQHandler(void)
 {
   
   //进入接收中断函数
@@ -392,7 +392,7 @@ void UART0_IRQHandler(void)
 }
 
 //UART1
-void UART1_IRQHandler(void)
+void UART1_RX_TX_IRQHandler(void)
 {
   
   //进入接收中断函数
@@ -408,7 +408,7 @@ void UART1_IRQHandler(void)
 }
 
 //UART2
-void UART2_IRQHandler(void)
+void UART2_RX_TX_IRQHandler(void)
 {
   //进入接收中断函数
   if((UART2_S1 & UART_S1_RDRF_MASK) && (UART2_C2 & UART_C2_RIE_MASK))
@@ -423,7 +423,7 @@ void UART2_IRQHandler(void)
 }
 
 //uart3
-void UART3_IRQHandler(void)
+void UART3_RX_TX_IRQHandler(void)
 {
   //进入接收中断函数
   if((UART3_S1 & UART_S1_RDRF_MASK) && (UART3_C2 & UART_C2_RIE_MASK))
@@ -438,7 +438,7 @@ void UART3_IRQHandler(void)
 }
 
 //uart4
-void UART4_IRQHandler(void)
+void UART4_RX_TX_IRQHandler(void)
 {
   //进入接收中断函数
   if((UART4_S1 & UART_S1_RDRF_MASK) && (UART4_C2 & UART_C2_RIE_MASK))
@@ -453,7 +453,7 @@ void UART4_IRQHandler(void)
 }
 
 //uart3
-void UART5_IRQHandler(void)
+void UART5_RX_TX_IRQHandler(void)
 {
   //进入接收中断函数
   if((UART5_S1 & UART_S1_RDRF_MASK) && (UART5_C2 & UART_C2_RIE_MASK))

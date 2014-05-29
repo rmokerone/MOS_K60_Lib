@@ -79,8 +79,8 @@ uint8 LPLD_DMA_Init(DMA_InitTypeDef dma_init_struct)
   if ((dst_dsize > DMA_DST_32BIT) || (dst_dsize != DMA_SRC_16BYTE))
     return 0;
 
-  SIM_SCGC6 |= SIM_SCGC6_DMAMUX0_MASK;  //打开DMA通道多路复用器时钟   
   SIM_SCGC7 |= SIM_SCGC7_DMA_MASK;     //打开DMA模块时钟
+  SIM_SCGC6 |= SIM_SCGC6_DMAMUX0_MASK;  //打开DMA通道多路复用器时钟   
   
   //关闭通道x硬件DMA请求 
   DMA0->ERQ &= ~(1<<chx);

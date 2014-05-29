@@ -8,6 +8,8 @@
 #include "common.h"
 #include "dev_ov7725.h"
 
+char ready_send_flag = 0;
+
 GPIO_InitTypeDef    OV_PTA_init;
 GPIO_InitTypeDef    OV_PTB_init;
 //GPIO_InitTypeDef    OV_PTE_init;
@@ -131,13 +133,13 @@ uint8 Ov7725_Init (void)
         {
             if (0 == LPLD_SCCB_WriteReg(ov7725_eagle_reg[i].addr, ov7725_eagle_reg[i].val))
             {
-               printf ("error: writeReg error 0x%x\n", ov7725_eagle_reg[i].addr);
+                printf ("error: writeReg error 0x%x\n", ov7725_eagle_reg[i].addr);
                 return 0;
             }
-            if (LPLD_SCCB_ReadReg(ov7725_eagle_reg[i].addr, &reg_Buff[i], 1))
+            /*if (LPLD_SCCB_ReadReg(ov7725_eagle_reg[i].addr, &reg_Buff[i], 1))
             {
                 printf ("writeRe 0x%x success: 0x%x\n", ov7725_eagle_reg[i].addr, reg_Buff[i]);
-            }
+            }*/
         }
     }
     else
@@ -145,7 +147,6 @@ uint8 Ov7725_Init (void)
         return 0;
     }
     return 1;
-
 }
 
 //ov7725延时函数
@@ -159,31 +160,57 @@ void Ov7725_Delay(void)
             asm("nop");
         }
     }
-
 }
 
 //DMA中断触发函数
 void Ov7725_eagle_dma (void)
 {
     ov7725_eagle_img_flag = IMG_FINISH;
-    DMA0->INT |= 0x1u << 0;
+    //关闭DMA通道
+    DMA_DIS(DMA_CH0);
+
+    //DMA0->INT |= 0x1u << 0;
+    //enable_irq(INT_PORTA - 16);
+
+    //图片进行解压
+    Ov7725_img_extract(Pix_Data, img, PHOTO_SIZE/8);
+    //解压完成标志置位
+    ready_send_flag = 1;
+    get_midline(Pix_Data, 60, 80);
+
+    //重新装载DMA目标地址
+    DMA_DADDR(DMA_CH0) = (uint32)img;
+    //Ov7725_sendimg(Pix_Data, PHOTO_SIZE);
+    
+    //clear PORTA isr set bit
+    PORTA_ISFR = ~0;
+    //开启GPIO口中断
+    //
+    LPLD_GPIO_EnableIrq(OV_PTA_init);
+    //DMA0->INT |= 0x1u << 0;
 }
 
 //场中断开始判断函数
 void Ov7725_eagle_vsync(void)
 {
+    //printf ("runing eagle_vsync\n");
     //判断场中断是否开始
     if (ov7725_eagle_img_flag == IMG_START)
     {
         ov7725_eagle_img_flag = IMG_GATHER;
-        LPLD_GPIO_DisableIrq(OV_PTA_init);
+        disable_irq (INT_PORTA - 16);
+        //LPLD_GPIO_DisableIrq(OV_PTA_init);
         //enable_irq (DMA_CH0 + INT_DMA0_DMA16 - 16);
-        LPLD_DMA_EnableIrq(OV_dma_init);
+        DMA_EN(DMA_CH0);
+        //LPLD_DMA_EnableIrq(OV_dma_init);
+        //重新装载DMA目标地址
+        DMA_DADDR(DMA_CH0) = (uint32)img;
     }
     else
     {
         //disable_irq (INT_PORTA);
-        LPLD_GPIO_DisableIrq(OV_PTA_init);
+        //LPLD_GPIO_DisableIrq(OV_PTA_init);
+        disable_irq (INT_PORTA - 16);
         ov7725_eagle_img_flag = IMG_FAIL;
     }
 }
@@ -194,23 +221,8 @@ void Ov7725_eagle_get_img(void)
     ov7725_eagle_img_flag = IMG_START;
     //write 1 clear int 
     PORTA_ISFR = ~0;
-    //清DMA中断标志位
-    DMA0->INT |= 0x1u << 0;
-    
-    LPLD_GPIO_EnableIrq (OV_PTA_init);
-    //enable_irq (INT_PORTA - 16);
-
-    while (ov7725_eagle_img_flag != IMG_FINISH)
-    {
-        if (ov7725_eagle_img_flag == IMG_FAIL)
-        {
-            printf("eagle error\n");
-            ov7725_eagle_img_flag = IMG_START;
-            PORTA_ISFR = ~0;
-           // enable_irq(INT_PORTA - 16);
-            LPLD_GPIO_EnableIrq (OV_PTA_init);
-        }
-    }
+    DMA_DADDR(DMA_CH0) = (uint32)img;
+    LPLD_GPIO_EnableIrq(OV_PTA_init);
 }
 
 /*!
@@ -223,23 +235,20 @@ void Ov7725_eagle_get_img(void)
  */
 void Ov7725_img_extract(uint8 *dst, uint8 *src, uint32 srclen)
 {
-    uint8 colour[2] = {1, 0}; //0 和 1 分别对应的颜色
+    uint8 colour[2] = {255, 0}; //0 和 1 分别对应的颜色
     //注：野火的摄像头 1(or255)表示 白色，0表示 黑色
     uint8 tmpsrc;
-    uint16 i=0;
-    while(srclen)
+    while(srclen --)
     {
-        tmpsrc=*(src+i);
-        dst[(PHOTO_SIZE/8-srclen)*8 + 0] = colour[ (tmpsrc >> 7 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 1] = colour[ (tmpsrc >> 6 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 2] = colour[ (tmpsrc >> 5 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 3] = colour[ (tmpsrc >> 4 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 4] = colour[ (tmpsrc >> 3 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 5] = colour[ (tmpsrc >> 2 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 6] = colour[ (tmpsrc >> 1 ) & 0x01 ];
-        dst[(PHOTO_SIZE/8-srclen)*8 + 7] = colour[ (tmpsrc >> 0 ) & 0x01 ];
-        ++i;
-        --srclen;
+        tmpsrc = *src++;
+        *dst++ = colour[(tmpsrc >> 7) & 0x01];
+        *dst++ = colour[(tmpsrc >> 6) & 0x01];
+        *dst++ = colour[(tmpsrc >> 5) & 0x01];
+        *dst++ = colour[(tmpsrc >> 4) & 0x01];
+        *dst++ = colour[(tmpsrc >> 3) & 0x01];
+        *dst++ = colour[(tmpsrc >> 2) & 0x01];
+        *dst++ = colour[(tmpsrc >> 1) & 0x01];
+        *dst++ = colour[(tmpsrc >> 0) & 0x01];
     }
 }
 
@@ -281,8 +290,10 @@ void Ov7725_Gpio_Init(void)
     OV_PTA_init.GPIO_PTx = PTA;
     OV_PTA_init.GPIO_Dir = DIR_INPUT;
     OV_PTA_init.GPIO_Pins = GPIO_Pin29;
+    //场中断IO设置，上升沿触发IR，输入上拉，使能滤波
     OV_PTA_init.GPIO_PinControl = IRQC_RI |
-                                    INPUT_PULL_DOWN;
+                                    INPUT_PULL_UP|
+                                    INPUT_PF_EN;
     OV_PTA_init.GPIO_Isr = Ov7725_isr;
     LPLD_GPIO_Init (OV_PTA_init);
 
@@ -290,7 +301,8 @@ void Ov7725_Gpio_Init(void)
     OV_PTD_init.GPIO_PTx = PTA;
     OV_PTD_init.GPIO_Pins = GPIO_Pin27;
     OV_PTD_init.GPIO_Dir = DIR_INPUT;
-    OV_PTD_init.GPIO_PinControl = IRQC_DMARI | INPUT_PULL_DIS;
+    //PCLK信号，下降沿触发DMA，输入上拉
+    OV_PTD_init.GPIO_PinControl = IRQC_DMAFA | INPUT_PULL_UP;
     LPLD_GPIO_Init (OV_PTD_init);
 
 }
@@ -302,7 +314,7 @@ void Ov7725_Dma_Init (void)
     OV_dma_init.DMA_Req = PORTA_DMAREQ;
     OV_dma_init.DMA_MajorLoopCnt = PHOTO_SIZE / 8;
     OV_dma_init.DMA_MinorByteCnt = 1;
-    //
+    
     OV_dma_init.DMA_SourceAddr = (uint32)(&GPIOB_PDIR);
     OV_dma_init.DMA_DestAddr = (uint32)img;
     OV_dma_init.DMA_DestAddrOffset = 1;
@@ -316,6 +328,8 @@ void Ov7725_Dma_Init (void)
     //允许DMA通道传输完成中断
     //enable_irq (DMA_CH0);
     LPLD_DMA_EnableIrq (OV_dma_init);
+    //使能通道x的DMA请求
+    //LPLD_DMA_EnableReq(DMA_CH0);
 }
 
 //ov7725中断
@@ -325,11 +339,119 @@ void Ov7725_isr (void)
     while (!PORTA_ISFR);
     uint32 flag = (PORTA->ISFR);
     (PORTA -> ISFR) = ~0;
-
+   
     n = 29;
+    //printf ("flag = %x\n", flag);
     if (flag & (1<<n))
     {
-        Ov7725_eagle_vsync();
+        //场中断开始 
+        //set 場中断
+        ov7725_eagle_img_flag = IMG_START;
+        //关闭PORTA中断
+        disable_irq (INT_PORTA - 16);
+        //LPLD_GPIO_DisableIrq(OV_PTA_init);
+        //enable_irq (DMA_CH0 + INT_DMA0_DMA16 - 16);
+        //重新装载DMA目标地址
+        //DMA_DADDR(DMA_CH0) = (uint32)img;
+        //开启DMA通道
+        DMA_EN(DMA_CH0);
+        //LPLD_DMA_EnableIrq(OV_dma_init);
+    }
+}
+
+//移植野火的函数
+//对FTM3有影响，需要查找下原因
+void dma_portx2buff_init(void)
+{
+    uint8 CHn, dma_req;
+    void *SADDR, *DADDR;
+    uint32 count,cfg, byten;
+
+    CHn = DMA_CH0;
+    SADDR = (void *) (&GPIOB_PDIR);
+    DADDR = (void *) img;
+    dma_req = PORTA_DMAREQ;
+    byten = DMA_BYTE1;
+    count = PHOTO_SIZE / 8;
+    cfg = DADDR_KEEPON;
+
+    uint8 BYTEs = (byten == DMA_BYTE1 ? 1 : (byten == DMA_BYTE2 ? 2 : (byten == DMA_BYTE4 ? 4 : 16)));
+    
+    SIM_SCGC7 |= SIM_SCGC7_DMA_MASK;
+    SIM_SCGC6 |= SIM_SCGC6_DMAMUX0_MASK;
+
+    DMA_SADDR(CHn) = (uint32) SADDR;
+    DMA_DADDR(CHn) = (uint32) DADDR;
+    DMA_SOFF(CHn) = 0x00u;
+    DMA_DOFF(CHn) = BYTEs;
+    DMA_ATTR(CHn) = (0
+                     |DMA_ATTR_SMOD(0x0)
+                     |DMA_ATTR_SSIZE(byten)
+                     |DMA_ATTR_DMOD(0x0)
+                     |DMA_ATTR_DSIZE(byten)
+                    );
+    DMA_CITER_ELINKNO(CHn) = DMA_CITER_ELINKNO_CITER(count);
+    DMA_BITER_ELINKNO(CHn) = DMA_BITER_ELINKNO_BITER(count);
+
+    DMA_CR &= ~DMA_CR_EMLM_MASK;
+
+    DMA_NBYTES_MLNO(CHn) = DMA_NBYTES_MLNO_NBYTES(BYTEs);
+
+    DMA_SLAST(CHn) = 0;
+    DMA_DLAST_SGA(CHn) = (uint32)((cfg & DADDR_KEEPON) == 0 ? (-count) : 0);
+    DMA_CSR(CHn) = (0
+                    |DMA_CSR_BWC(3)
+                    |DMA_CSR_DREQ_MASK
+                    |DMA_CSR_INTMAJOR_MASK
+                   );
+
+    DMAMUX_CHCFG_REG(DMAMUX0_BASE_PTR, CHn) = (0                
+    |DMAMUX_CHCFG_ENBL_MASK
+    |DMAMUX_CHCFG_SOURCE(dma_req));
+    DMA_DIS(CHn);
+    DMA_IRQ_CLEAN(CHn);
+    
+}
+
+
+//提取中线
+void get_midline(uint8 *img, uint8 h, uint8 w)
+{
+    int16 p = 0, i = 0, line_mid = 39;
+    int8 side_left = 0, side_right = 79;
+
+    if (img[(h-1)*w + line_mid] == 0xff)
+    {
+        for (i = h - 1; i >= 0; i --)
+        {
+            for (p = line_mid - 1; p > 0; p --)
+            {
+                if (img[i * w + p] == 0)
+                    if ((img[i * w + p - 1] == 0) 
+                            && (line_mid-p-1>= 0))
+                    {
+                        side_left = p;
+                        p = p - 2;
+                        for (; p >= 0; p --)
+                            img[i * w + p] = 0;
+                    }
+            }
+            for (p = line_mid + 1; p < w -1; p ++)
+            {
+                if (img[i * w + p] == 0)
+                {
+                    if ((img[i * w + p + 1] == 0)&&(p+1<w))
+                    {
+                        side_right = p;
+                        p = p + 2;
+                        for (; p < w; p ++)
+                            img[i * w + p] = 0;
+                    }
+                }
+            }
+            line_mid = (side_left + side_right) / 2;
+            img[i * w + line_mid] = 0;
+        }
     }
 }
 

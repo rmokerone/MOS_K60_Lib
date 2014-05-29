@@ -219,4 +219,26 @@ void Ov7725_Gpio_Init(void);
 //OV7725 DMA初始化 
 void Ov7725_Dma_Init (void);
 
+typedef enum 
+{
+    DADDR_RECOVER = 0,
+    DADDR_KEEPON = 1,
+}DMA_cfg;
+
+typedef enum 
+{
+    DMA_BYTE1 = 0,
+    DMA_BYTE2 = 1,
+    DMA_BYTE4 = 2,
+    DMA_BYTE16 = 4
+}DMA_BYTEn;
+
+//移植野火的函数
+void dma_portx2buff_init(void);
+
+//提取中线
+//h高 = 60
+//w宽 = 80
+void get_midline(uint8 *img, uint8 h, uint8 w);
+
 #endif

@@ -47,11 +47,11 @@ int8 LPLD_GPIO_Init(GPIO_InitTypeDef gpio_init_structure)
     
     if (dir == DIR_OUTPUT)
     {
-        ptx->PDDR = pins;
+        ptx->PDDR |= pins;
         if (output == OUTPUT_H)
-            ptx->PSOR = pins;
+            ptx->PSOR |= pins;
         else
-            ptx->PCOR = pins;
+            ptx->PCOR |= pins;
     }
     else
     {
@@ -90,8 +90,8 @@ uint8 LPLD_GPIO_EnableIrq(GPIO_InitTypeDef gpio_init_structure)
         return 0;
     if (ptx == PTA)
     {
-        enable_irq(87);
         GPIO_ISR[0] = isr_func;
+        enable_irq(87);
     }
     else if (ptx == PTB)
     {
@@ -174,7 +174,7 @@ void LPLD_GPIO_Output(GPIO_MemMapPtr ptx, uint32 data32)
 
 void LPLD_GPIO_Output_b (GPIO_MemMapPtr ptx, uint8 lsb_num, uint8 data1)
 {
-    ptx->PDOR = (ptx -> PDOR & ~(0x01L << lsb_num)) | (uint32) data1 << lsb_num;
+    ptx->PDOR = (ptx -> PDOR & ~(0x01L << lsb_num)) | ((uint32) data1 << lsb_num);
 }
 
 /*
@@ -185,12 +185,12 @@ void LPLD_GPIO_Output_b (GPIO_MemMapPtr ptx, uint8 lsb_num, uint8 data1)
  */
 void LPLD_GPIO_Toggle(GPIO_MemMapPtr ptx, uint32 data32)
 {
-    ptx->PTOR = data32;
+    ptx->PTOR |= data32;
 }
 
 void LPLD_GPIO_Toggle_b(GPIO_MemMapPtr ptx, uint8 lsb_num)
 {
-    ptx -> PTOR = 0x01L << lsb_num;
+    ptx -> PTOR |= 0x01L << lsb_num;
 }
 
 /*
