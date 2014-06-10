@@ -173,10 +173,10 @@ void Ov7725_eagle_dma (void)
     //enable_irq(INT_PORTA - 16);
 
     //图片进行解压
-    Ov7725_img_extract(Pix_Data, img, PHOTO_SIZE/8);
+    //Ov7725_img_extract(Pix_Data, img, PHOTO_SIZE/8);
     //解压完成标志置位
     ready_send_flag = 1;
-    get_midline(Pix_Data, 60, 80);
+    //get_midline(Pix_Data, 60, 80);
 
     //重新装载DMA目标地址
     DMA_DADDR(DMA_CH0) = (uint32)img;
@@ -186,7 +186,7 @@ void Ov7725_eagle_dma (void)
     PORTA_ISFR = ~0;
     //开启GPIO口中断
     //
-    LPLD_GPIO_EnableIrq(OV_PTA_init);
+    //LPLD_GPIO_EnableIrq(OV_PTA_init);
     //DMA0->INT |= 0x1u << 0;
 }
 
@@ -235,7 +235,7 @@ void Ov7725_eagle_get_img(void)
  */
 void Ov7725_img_extract(uint8 *dst, uint8 *src, uint32 srclen)
 {
-    uint8 colour[2] = {255, 0}; //0 和 1 分别对应的颜色
+    uint8 colour[2] = {255, 0};
     //注：野火的摄像头 1(or255)表示 白色，0表示 黑色
     uint8 tmpsrc;
     while(srclen --)
@@ -415,15 +415,16 @@ void dma_portx2buff_init(void)
 
 
 //提取中线
-void get_midline(uint8 *img, uint8 h, uint8 w)
+void get_midline(uint8 *img, uint8 *midline, uint8 h, uint8 w)
 {
     int16 p = 0, i = 0, line_mid = 39;
     int8 side_left = 0, side_right = 79;
-
+    //若最远处的一行中点为白色进行处理，否则退出处理函数
     if (img[(h-1)*w + line_mid] == 0xff)
     {
         for (i = h - 1; i >= 0; i --)
         {
+            //左半部分查找边界
             for (p = line_mid - 1; p > 0; p --)
             {
                 if (img[i * w + p] == 0)
@@ -432,10 +433,12 @@ void get_midline(uint8 *img, uint8 h, uint8 w)
                     {
                         side_left = p;
                         p = p - 2;
+                        //边界左边置黑
                         for (; p >= 0; p --)
                             img[i * w + p] = 0;
                     }
             }
+            //右半部分查找边界
             for (p = line_mid + 1; p < w -1; p ++)
             {
                 if (img[i * w + p] == 0)
@@ -444,12 +447,16 @@ void get_midline(uint8 *img, uint8 h, uint8 w)
                     {
                         side_right = p;
                         p = p + 2;
+                        //边界右边置黑
                         for (; p < w; p ++)
                             img[i * w + p] = 0;
                     }
                 }
             }
             line_mid = (side_left + side_right) / 2;
+            //给中线数组赋值
+            midline[i] = line_mid;
+            //标定中线为黑色便于上位机观察
             img[i * w + line_mid] = 0;
         }
     }

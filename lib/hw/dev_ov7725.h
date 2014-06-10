@@ -236,9 +236,12 @@ typedef enum
 //移植野火的函数
 void dma_portx2buff_init(void);
 
+//引入中线数组
+extern uint8 midline[60];
+
 //提取中线
 //h高 = 60
 //w宽 = 80
-void get_midline(uint8 *img, uint8 h, uint8 w);
+void get_midline(uint8 *img,uint8 *midline, uint8 h, uint8 w);
 
 #endif

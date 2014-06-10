@@ -75,15 +75,17 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
   SPI_ISR_CALLBACK FillInt_isr = spi_init_structure.SPI_TxFIFO_FillIntIsr;
   SPI_ISR_CALLBACK DrainInt_isr = spi_init_structure.SPI_RxFIFO_DrainIntIsr;
  
-    if (spi_mode <= SPI_MODE_MASTER || sck_div <= SPI_SCK_DIV_32768)
+    if (spi_mode <= SPI_MODE_MASTER || sck_div >= SPI_SCK_DIV_32768)
         return 0;
     //检测参数
 
   if(spix == SPI0)
   {
+      //enable DSPI0 clock
     SIM_SCGC6 |= SIM_SCGC6_DSPI0_MASK;  
 
-    //选择PCS0
+    //选择pcs0 
+    //NRF24L01 pcs0_pin = PTA14
     switch(pcs0_pin)
     {
         case PTA14:
@@ -132,7 +134,8 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
       PORTB->PCR[23] = 0 | PORT_PCR_MUX(3) | PORT_PCR_DSE_MASK;
     }
 
-    //选择SCK
+    //选择SCK 
+    //sck_pin = PTA15
     if(sck_pin == PTA15)
     {
       PORTA->PCR[15] = 0 | PORT_PCR_MUX(2) | PORT_PCR_DSE_MASK;//SCK
@@ -141,7 +144,8 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
     {
       PORTC->PCR[5] = 0 | PORT_PCR_MUX(2) | PORT_PCR_DSE_MASK;//SCK
     }
-    //选择MOSI
+    //选择mosi 
+    //mosi_pin = PTA16
     if(mosi_pin == PTA16)
     {
       PORTA->PCR[16] = 0 | PORT_PCR_MUX(2) | PORT_PCR_DSE_MASK;//SOUT
@@ -150,7 +154,8 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
     {
       PORTC->PCR[6] = 0 | PORT_PCR_MUX(2) | PORT_PCR_DSE_MASK;//SOUT
     }
-    //选择MISO
+    //选择MISO 
+    //miso_pin = PTA17
     if(miso_pin == PTA17)
     {
       PORTA->PCR[17] = 0 | PORT_PCR_MUX(2); //SIN
@@ -268,10 +273,15 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
     } 
   }
 
+  //allow external logic to disable dspi clocks
   spix->MCR &=  ~(SPI_MCR_MDIS_MASK);
-  spix->MCR |=  (SPI_MCR_HALT_MASK        
-                |SPI_MCR_PCSIS_MASK       
-                |SPI_MCR_CLR_TXF_MASK    
+
+  spix->MCR |=  (SPI_MCR_HALT_MASK //stop transfers   
+          //PCS[5] / PCSS is used as active-low PCS strobe signal
+                |SPI_MCR_PCSIS_MASK      
+          //clear the tx fifo count
+                |SPI_MCR_CLR_TXF_MASK 
+          //clear the rx fifo count
                 |SPI_MCR_CLR_RXF_MASK); 
  
   //选择SPI工作模式
@@ -290,19 +300,23 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
   //选择使能tx FIFO
   if(txFIFO_enable == TRUE)
   {
+      //tx fifo is enable
     spix->MCR &= ~SPI_MCR_DIS_TXF_MASK; 
   }
   else
   {
+      //tx fifo is disable
     spix->MCR |= SPI_MCR_DIS_TXF_MASK;//选择传统方式
   }
   //选择使能Rx FIFO
   if(rxFIFO_enable == TRUE)
   {
+      //rx fifo is enable
     spix->MCR &= ~SPI_MCR_DIS_RXF_MASK;
   }
   else
   {
+      //rx fifo is disable
     spix->MCR |= SPI_MCR_DIS_RXF_MASK; //选择传统方式
   }
   //选择使能发送完成中断
@@ -420,11 +434,15 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
     if(rxFIFO_Drain_int == TRUE && rxFIFO_req == SPI_FIFO_INTREQUEST)
     { SPI2_ISR[SPI_RxFIFO_DrainInt] = DrainInt_isr; }
   }
-  //配置SPI CTAR寄存器，设置SPI的总线时序
-  spix->CTAR[0] &= (~SPI_CTAR_LSBFE_MASK);
 
-  spix->CTAR[0] |=  (SPI_CTAR_DBR_MASK  
-                      |SPI_CTAR_PBR(0)           
+  //配置SPI CTAR寄存器，设置SPI的总线时序
+  //MSB first
+  spix->CTAR[0] &= (~SPI_CTAR_LSBFE_MASK);
+  //DBR sck double
+  spix->CTAR[0] |=  (SPI_CTAR_DBR_MASK 
+          //baud rate div = 1
+                      |SPI_CTAR_PBR(0)
+          //set date frame length = 7+1
                       |SPI_CTAR_FMSZ(7));        
                        
   //设置SPI总线频率
@@ -451,7 +469,8 @@ uint8 LPLD_SPI_Init(SPI_InitTypeDef spi_init_structure)
               |SPI_SR_TFUF_MASK
               |SPI_SR_TCF_MASK
               |SPI_SR_EOQF_MASK);
-  //使能SPIx
+  //使能spix 
+  //enable transfers
   spix->MCR &=~SPI_MCR_HALT_MASK; 
   
   return 1;
@@ -587,7 +606,11 @@ uint8 LPLD_SPI_Master_WriteRead(SPI_MemMapPtr spix,uint8 data,uint8 pcsx,uint8 p
 {
   uint8 temp;
   
-  spix->PUSHR  = (((uint32_t)(((uint32_t)(pcs_state))<<SPI_PUSHR_CONT_SHIFT))&SPI_PUSHR_CONT_MASK)
+  //PUSHR - DSPI PUSH Tx FIFO register In Master mode
+  //CONT continuos peripheral chip select enable 
+  //CONT = 1 return inactive
+  //CONT = 0 kepp ASSERT
+     spix->PUSHR  = (((uint32_t)(((uint32_t)(pcs_state))<<SPI_PUSHR_CONT_SHIFT))&SPI_PUSHR_CONT_MASK)
                |SPI_PUSHR_CTAS(0)
                |SPI_PUSHR_PCS(pcsx)
                |data;                 
@@ -595,7 +618,8 @@ uint8 LPLD_SPI_Master_WriteRead(SPI_MemMapPtr spix,uint8 data,uint8 pcsx,uint8 p
   while(!(spix->SR & SPI_SR_TCF_MASK));
   spix->SR |= SPI_SR_TCF_MASK ;               
   
-  while(!(spix->SR & SPI_SR_RFDF_MASK)); 
+  while(!(spix->SR & SPI_SR_RFDF_MASK));
+     //read date
   temp = (uint8)(spix->POPR & 0xff);           
   spix->SR |= SPI_SR_RFDF_MASK;                
   return temp;
