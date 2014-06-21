@@ -10,8 +10,8 @@
  * http://www.wtfpl.net/ for more details.
  *
  */
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef __COMMON_H_
+#define __COMMON_H_
 
 #include "k60_configure.h"
 #include "system_k60.h"

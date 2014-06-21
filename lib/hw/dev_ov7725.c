@@ -107,7 +107,7 @@ uint8 Ov7725_Init (void)
 {
     uint16 i = 0;
     uint8 device_Id = 0;
-    uint8 reg_Buff[50] = {0};
+    //uint8 reg_Buff[50] = {0};
 
     LPLD_SCCB_Init ();
     
@@ -235,20 +235,19 @@ void Ov7725_eagle_get_img(void)
  */
 void Ov7725_img_extract(uint8 *dst, uint8 *src, uint32 srclen)
 {
-    uint8 colour[2] = {255, 0};
-    //注：野火的摄像头 1(or255)表示 白色，0表示 黑色
+    //注：野火的摄像头 0表示 白色，1表示 黑色
     uint8 tmpsrc;
     while(srclen --)
     {
         tmpsrc = *src++;
-        *dst++ = colour[(tmpsrc >> 7) & 0x01];
-        *dst++ = colour[(tmpsrc >> 6) & 0x01];
-        *dst++ = colour[(tmpsrc >> 5) & 0x01];
-        *dst++ = colour[(tmpsrc >> 4) & 0x01];
-        *dst++ = colour[(tmpsrc >> 3) & 0x01];
-        *dst++ = colour[(tmpsrc >> 2) & 0x01];
-        *dst++ = colour[(tmpsrc >> 1) & 0x01];
-        *dst++ = colour[(tmpsrc >> 0) & 0x01];
+        *dst++ = (tmpsrc >> 7) & 0x01;
+        *dst++ = (tmpsrc >> 6) & 0x01;
+        *dst++ = (tmpsrc >> 5) & 0x01;
+        *dst++ = (tmpsrc >> 4) & 0x01;
+        *dst++ = (tmpsrc >> 3) & 0x01;
+        *dst++ = (tmpsrc >> 2) & 0x01;
+        *dst++ = (tmpsrc >> 1) & 0x01;
+        *dst++ = (tmpsrc >> 0) & 0x01;
     }
 }
 
@@ -460,5 +459,52 @@ void get_midline(uint8 *img, uint8 *midline, uint8 h, uint8 w)
             img[i * w + line_mid] = 0;
         }
     }
+}
+
+//souImg为图像源地址，destImg为图像目的地址，length为80，width为60
+//Author:@壕
+void Edge_Detect(int8 **souImg, int8 **destImg, unsigned int length,unsigned int width)
+{
+	char xx[3], yy[3], a[3] = {1,2,1};
+	unsigned char x, y, i, j;
+	char tempx, tempy;
+
+	x = length - 1;	y = width - 1;
+	
+	for(i = 1;i < y;i++)
+	{
+		for(j = 1;j < x;j++)
+		{
+			xx[0] = souImg[i][j - 1];
+            xx[1] = souImg[i][j];	
+            xx[2] = souImg[i][j + 1];
+
+			yy[0] = souImg[i - 1][j];
+            yy[1] = souImg[i][j];
+            yy[2] = souImg[i + 1][j];
+	
+            tempx = xx[0]*a[0] + xx[1]*a[1] + xx[2]*a[2];
+
+			if(tempx == 1)
+				destImg[i][j] = 0x00;
+			else 
+			{
+				tempy = yy[0]*a[0] + yy[1]*a[1] + yy[2]*a[2];
+				if(tempy == 1)
+					destImg[i][j] = 0x00;
+				else
+					destImg[i][j] = 0x01;
+			}
+		}
+	}
+    
+    /*for(j = 0;j < length;j++ )
+		destImg[0][j] = 0x0f;
+	for(j = 0;j < length;j++ )
+		destImg[59][j] = 0x0f;
+	for(i = 0;i < width;i++ )
+		destImg[j][0] = 0x0f;
+	for(i = 0;i < width;i++ )
+		destImg[j][79] = 0x0f;*/
 }
 

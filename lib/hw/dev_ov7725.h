@@ -244,4 +244,7 @@ extern uint8 midline[60];
 //w宽 = 80
 void get_midline(uint8 *img,uint8 *midline, uint8 h, uint8 w);
 
+//souImg为图像源地址，destImg为图像目的地址，length为80，width为60
+void Edge_Detect(int8 **souImg, int8 **destImg, unsigned int length,unsigned int width);
+
 #endif
