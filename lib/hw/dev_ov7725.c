@@ -107,7 +107,7 @@ uint8 Ov7725_Init (void)
 {
     uint16 i = 0;
     uint8 device_Id = 0;
-    //uint8 reg_Buff[50] = {0};
+    uint8 reg_Buff[50] = {0};
 
     LPLD_SCCB_Init ();
     
@@ -185,9 +185,6 @@ void Ov7725_eagle_dma (void)
     //clear PORTA isr set bit
     PORTA_ISFR = ~0;
     //开启GPIO口中断
-    //
-    //LPLD_GPIO_EnableIrq(OV_PTA_init);
-    //DMA0->INT |= 0x1u << 0;
 }
 
 //场中断开始判断函数
@@ -233,6 +230,7 @@ void Ov7725_eagle_get_img(void)
  *  @since      v5.0            img_extract(img, imgbuff,CAMERA_SIZE);
  *  Sample usage:   sendimg(imgbuff, CAMERA_W * CAMERA_H);                    //发送到上位机
  */
+
 void Ov7725_img_extract(uint8 *dst, uint8 *src, uint32 srclen)
 {
     //注：野火的摄像头 0表示 白色，1表示 黑色
@@ -463,7 +461,7 @@ void get_midline(uint8 *img, uint8 *midline, uint8 h, uint8 w)
 
 //souImg为图像源地址，destImg为图像目的地址，length为80，width为60
 //Author:@壕
-void Edge_Detect(int8 **souImg, int8 **destImg, unsigned int length,unsigned int width)
+void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsigned int width)
 {
 	char xx[3], yy[3], a[3] = {1,2,1};
 	unsigned char x, y, i, j;
@@ -506,5 +504,19 @@ void Edge_Detect(int8 **souImg, int8 **destImg, unsigned int length,unsigned int
 		destImg[j][0] = 0x0f;
 	for(i = 0;i < width;i++ )
 		destImg[j][79] = 0x0f;*/
+}
+
+
+//将一维数组转变成二维数组
+void oneToTwo (uint8 *img, int8 dest[][80])
+{
+    uint8 cols, cows;
+    for (cows = 0; cows < 60; cows ++)
+    {
+        for (cols = 0; cols < 80; cols ++)
+        {
+            dest[cows][cols] = (int8) img[cows * 80 + cols];
+        }
+    }
 }
 

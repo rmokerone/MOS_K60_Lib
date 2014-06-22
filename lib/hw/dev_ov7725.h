@@ -170,6 +170,9 @@ typedef struct
 uint8 Pix_Data [PHOTO_SIZE];
 uint8 img[PHOTO_SIZE / 8];
 
+//解压后的图像缓存
+int8 souImg [V][H];
+
 /*
  * 返回数组元素的个数
  */
@@ -219,6 +222,10 @@ void Ov7725_Gpio_Init(void);
 //OV7725 DMA初始化 
 void Ov7725_Dma_Init (void);
 
+//将一维数组转变成二维数组
+void oneToTwo (uint8 *img, int8 dest[][80]);
+
+
 typedef enum 
 {
     DADDR_RECOVER = 0,
@@ -245,6 +252,6 @@ extern uint8 midline[60];
 void get_midline(uint8 *img,uint8 *midline, uint8 h, uint8 w);
 
 //souImg为图像源地址，destImg为图像目的地址，length为80，width为60
-void Edge_Detect(int8 **souImg, int8 **destImg, unsigned int length,unsigned int width);
+void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsigned int width);
 
 #endif
