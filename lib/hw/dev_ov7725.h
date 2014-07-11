@@ -166,8 +166,9 @@ typedef struct
 #define V 60
 #define PHOTO_SIZE H*V
 
-//采集图像缓存
+//解压后的图像缓存
 uint8 Pix_Data [PHOTO_SIZE];
+//DMA采集到原始图像缓冲区
 uint8 img[PHOTO_SIZE / 8];
 
 //解压后的图像缓存
@@ -243,13 +244,9 @@ typedef enum
 //移植野火的函数
 void dma_portx2buff_init(void);
 
-//引入中线数组
-extern uint8 midline[60];
-
 //提取中线
 //h高 = 60
 //w宽 = 80
-void get_midline(uint8 *img,uint8 *midline, uint8 h, uint8 w);
 
 //souImg为图像源地址，destImg为图像目的地址，length为80，width为60
 void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsigned int width);

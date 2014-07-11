@@ -410,55 +410,6 @@ void dma_portx2buff_init(void)
     
 }
 
-
-//提取中线
-void get_midline(uint8 *img, uint8 *midline, uint8 h, uint8 w)
-{
-    int16 p = 0, i = 0, line_mid = 39;
-    int8 side_left = 0, side_right = 79;
-    //若最远处的一行中点为白色进行处理，否则退出处理函数
-    if (img[(h-1)*w + line_mid] == 0xff)
-    {
-        for (i = h - 1; i >= 0; i --)
-        {
-            //左半部分查找边界
-            for (p = line_mid - 1; p > 0; p --)
-            {
-                if (img[i * w + p] == 0)
-                    if ((img[i * w + p - 1] == 0) 
-                            && (line_mid-p-1>= 0))
-                    {
-                        side_left = p;
-                        p = p - 2;
-                        //边界左边置黑
-                        for (; p >= 0; p --)
-                            img[i * w + p] = 0;
-                    }
-            }
-            //右半部分查找边界
-            for (p = line_mid + 1; p < w -1; p ++)
-            {
-                if (img[i * w + p] == 0)
-                {
-                    if ((img[i * w + p + 1] == 0)&&(p+1<w))
-                    {
-                        side_right = p;
-                        p = p + 2;
-                        //边界右边置黑
-                        for (; p < w; p ++)
-                            img[i * w + p] = 0;
-                    }
-                }
-            }
-            line_mid = (side_left + side_right) / 2;
-            //给中线数组赋值
-            midline[i] = line_mid;
-            //标定中线为黑色便于上位机观察
-            img[i * w + line_mid] = 0;
-        }
-    }
-}
-
 //souImg为图像源地址，destImg为图像目的地址，length为80，width为60
 //Author:@壕
 void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsigned int width)
@@ -484,6 +435,7 @@ void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsi
             tempx = xx[0]*a[0] + xx[1]*a[1] + xx[2]*a[2];
 
 			if(tempx == 1)
+                //如果检测到边沿设置成黑色0
 				destImg[i][j] = 0x00;
 			else 
 			{
@@ -491,7 +443,8 @@ void Edge_Detect(int8 souImg[][80], int8 destImg[][80], unsigned int length,unsi
 				if(tempy == 1)
 					destImg[i][j] = 0x00;
 				else
-					destImg[i][j] = 0x01;
+                    //如果不是边沿设置成白色1
+					destImg[i][j] = 0x0f;
 			}
 		}
 	}
